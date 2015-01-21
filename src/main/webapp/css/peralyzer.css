@@ -1,0 +1,7 @@
+#main_network_view {
+	height: 550px;
+	border: 1px solid #ddd;
+	overflow: hidden !important;
+	border-radius: 0.25em;
+	margin: 0.25em;
+}
