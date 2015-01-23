@@ -87,6 +87,7 @@
 	<script src="js/lib/jquery.scrollTo-1.4.3.1-min.js"></script>
 	<script src="js/lib/js_cols.min.js"></script>
 	<script src="js/lib/d3.min.js"></script>
+	<script src="js/lib/colorbrewer.js"></script>
 
 	<!--[if lt IE 8]>
 	<!--script src="js/lib/icon-font-ie7.js"></script>

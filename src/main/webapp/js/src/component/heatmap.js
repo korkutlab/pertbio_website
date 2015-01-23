@@ -7,7 +7,8 @@ function HeatMap(options, data)
 		el: "#heatmap",         // id of the container
 		cellWidth: 4,           // width of a single data cell
 		cellHeight: 4,          // height of a single data cell
-		colorScaleRange: ["#0000FF", "#FFFFFF", "#FF0000"], // [min, mid, max] values for color scale range
+		colorScaleRange: ["#0000FF", "#FDFDFD", "#FF0000"], // [min, mid, max] values for color scale range
+		//colorScaleRange: colorbrewer.RdBu[3].reverse(),
 		colorScaleDomain: [-1, 0, 1], // [min, mid, max] values for color scale domain
 		animationDuration: 1000 // transition duration (in ms) used for animations
 	};
