@@ -5,7 +5,7 @@ function HeatMap(options, data)
 	 */
 	var _defaultOpts = {
 		el: "#heatmap",         // id of the container
-		cellWidth: 10,           // width of a single data cell
+		cellWidth: 4,           // width of a single data cell
 		cellHeight: 4,          // height of a single data cell
 		colorScaleRange: ["#0000FF", "#FFFFFF", "#FF0000"], // [min, mid, max] values for color scale range
 		colorScaleDomain: [-1, 0, 1], // [min, mid, max] values for color scale domain

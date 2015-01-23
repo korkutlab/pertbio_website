@@ -13,7 +13,11 @@
     <context:property-placeholder location="classpath*:spring/peralyzer.properties" />
 
 	<bean class="org.cbio.peralyzer.service.NetworkService" id="networkService">
-		<property name="averageBpmelModelsResource" value="${averageBpmelModels.location}"/>
+		<property name="networkModelsResource" value="${networkModels.location}"/>
+	</bean>
+
+	<bean class="org.cbio.peralyzer.service.MatrixDataService" id="matrixDataService">
+		<property name="matrixDataResource" value="${matrixData.location}"/>
 	</bean>
 
 	<!--<bean class="org.cbio.graphviz.service.SampleValidationService" id="sampleValidationService">-->

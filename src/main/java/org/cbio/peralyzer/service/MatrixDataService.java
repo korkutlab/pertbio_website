@@ -7,25 +7,25 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class NetworkService
+public class MatrixDataService
 {
-	// source directory for the network model files
-	private Resource networkModelsResource;
+	// source directory for the matrix data files
+	private Resource matrixDataResource;
 
-	public Resource getNetworkModelsResource()
+	public Resource getMatrixDataResource()
 	{
-		return networkModelsResource;
+		return matrixDataResource;
 	}
-	public void setNetworkModelsResource(Resource networkModelsResource)
+	public void setMatrixDataResource(Resource matrixDataResource)
 	{
-		this.networkModelsResource = networkModelsResource;
+		this.matrixDataResource = matrixDataResource;
 	}
 
-	@Cacheable("networkDataCache")
-	public String getNetworkData(String model) throws IOException
+	@Cacheable("matrixDataCache")
+	public String getMatrixData(String name) throws IOException
 	{
-		String filename = this.getNetworkModelsResource().getFile().getAbsolutePath() +
-		                  "/" + model + ".cyjs";
+		String filename = this.getMatrixDataResource().getFile().getAbsolutePath() +
+		                  "/" + name + ".txt";
 
 		BufferedReader in = new BufferedReader(new FileReader(filename));
 		String line;

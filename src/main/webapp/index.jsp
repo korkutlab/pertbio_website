@@ -97,10 +97,20 @@
 
 	<script src="js/src/component/heatmap.js"></script>
 	<script src="js/src/util/HeatMapDataUtil.js"></script>
+	<script src="js/src/util/MatrixParser.js"></script>
+	<script src="js/src/util/ViewUtil.js"></script>
+	<script src="js/src/model/DataModel.js"></script>
+	<script src="js/src/view/NotyView.js"></script>
+	<script src="js/src/view/HeatMapView.js"></script>
 	<script src="js/src/view/NetworkView.js"></script>
 	<script src="js/src/peralyzer.js"></script>
 
-    <div id="main_network_view">Hello World!</div>
+	<script type="text/template" id="noty-error-msg-template">
+		{{errorMsg}}
+	</script>
+
+    <div id="main_network_view"></div>
+	<div id="main_heatmap_view"></div>
 
   </body>
 </html>
