@@ -96,6 +96,7 @@
 	<![endif]-->
 
 	<script src="js/src/component/heatmap.js"></script>
+	<script src="js/src/util/HeatMapDataUtil.js"></script>
 	<script src="js/src/view/NetworkView.js"></script>
 	<script src="js/src/peralyzer.js"></script>
 

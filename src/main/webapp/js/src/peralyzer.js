@@ -4934,6 +4934,17 @@ $(document).ready(function() {
 	var options = {el: "#main_network_view",
 		model: {data: elements}};
 
-	var netView = new NetworkView(options);
-	netView.render();
+	//var netView = new NetworkView(options);
+	//netView.render();
+	var data = [];
+
+	data.push([0.2, 0.8, -0.66, 0]);
+	data.push([-0.2, -0.5, -0.36, -1]);
+	data.push([0.4, -0.5, 0.16, 1]);
+	data.push([0.2, -0.33, -0.5, 0.66]);
+	data.push([-0.1, -0.5, 0.44, -0.26]);
+
+
+	//var heatmap = new HeatMap({el: "#main_network_view"}, data);
+	//heatmap.init();
 });
