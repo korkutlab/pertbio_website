@@ -26,7 +26,7 @@ $(document).ready(function() {
 		error: function(collection, response, options)
 		{
 			ViewUtil.displayErrorMessage(
-				"Error retrieving customized data.");
+				"Error retrieving network data.");
 		}
 	});
 
@@ -53,7 +53,7 @@ $(document).ready(function() {
 		error: function(collection, response, options)
 		{
 			ViewUtil.displayErrorMessage(
-				"Error retrieving customized data.");
+				"Error retrieving matrix data.");
 		}
 	});
 });
