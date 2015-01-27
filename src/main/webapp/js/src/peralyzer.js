@@ -41,14 +41,11 @@ $(document).ready(function() {
 		{
 			var matrix = MatrixParser.parseInput(response);
 
-			// TODO init HeatMap view...
-			//var model = {matrix: matrix};
-			//var heatmapOpts = {el: "#main-heatmap-view", model: model};
-			//var heatmapView = new HeatMapView(heatmapOpts);
-			//heatmapView.render();
-
-			var heatmap = new HeatMap({el: "#main_heatmap_view"}, matrix.data);
-			heatmap.init();
+			// init HeatMap view
+			var model = {matrix: matrix};
+			var heatmapOpts = {el: "#main_heatmap_view", model: model};
+			var heatmapView = new HeatMapView(heatmapOpts);
+			heatmapView.render();
 		},
 		error: function(collection, response, options)
 		{

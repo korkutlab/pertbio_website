@@ -46,7 +46,7 @@
     <!--link rel="shortcut icon" href="images/favicon.ico"-->
 
     <link href="css/jquery.fancybox-1.3.4.css" rel="stylesheet">
-
+	<link href="css/jquery.qtip.min.css" rel="stylesheet">
 
     <!-- Loading cytoscape.js plugins -->
     <link href="css/jquery.cytoscape-panzoom.css" rel="stylesheet">
@@ -83,6 +83,7 @@
 	<script src="js/lib/jquery.easing-1.3.pack.js"></script>
 	<script src="js/lib/jquery.expander.min.js"></script>
 	<script src="js/lib/jquery.noty.packaged.min.js"></script>
+	<script src="js/lib/jquery.qtip.min.js"></script>
 	<script src="js/lib/store.js"></script>
 	<script src="js/lib/jquery.scrollTo-1.4.3.1-min.js"></script>
 	<script src="js/lib/js_cols.min.js"></script>
@@ -100,11 +101,16 @@
 	<script src="js/src/model/DataModel.js"></script>
 	<script src="js/src/view/NotyView.js"></script>
 	<script src="js/src/view/HeatMapView.js"></script>
+	<script src="js/src/view/HeatMapTipView.js"></script>
 	<script src="js/src/view/NetworkView.js"></script>
 	<script src="js/src/peralyzer.js"></script>
 
 	<script type="text/template" id="noty-error-msg-template">
 		{{errorMsg}}
+	</script>
+
+	<script type="text/template" id="heatmap_tip_template">
+		{{value}}
 	</script>
 
     <div id="main_network_view"></div>

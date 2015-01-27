@@ -10,7 +10,27 @@ function HeatMap(options, data)
 		colorScaleRange: ["#0000FF", "#FDFDFD", "#FF0000"], // [min, mid, max] values for color scale range
 		//colorScaleRange: colorbrewer.RdBu[3].reverse(),
 		colorScaleDomain: [-1, 0, 1], // [min, mid, max] values for color scale domain
-		animationDuration: 1000 // transition duration (in ms) used for animations
+		animationDuration: 1000, // transition duration (in ms) used for animations
+		/**
+		 * Default data point tooltip function.
+		 *
+		 * @param selection target selection (assuming data rectangles)
+		 */
+		dataTooltipFn: function(selection) {
+			var options = {
+				content: {text: function(event, api) {
+					var model = {value: d3.selectAll(this).datum().score};
+					var tooltipView = new HeatMapTipView({model: model});
+					return tooltipView.compileTemplate();
+				}},
+				hide: {fixed: true, delay: 100, event: 'mouseout'},
+				show: {event: 'mouseover'},
+				style: {classes: 'qtip-light qtip-rounded qtip-shadow'},
+				position: {my:'bottom left', at:'top center' , viewport: $(window)}
+			};
+
+			$(selection).qtip(options);
+		}
 	};
 
 	var _svg = null;
@@ -36,6 +56,9 @@ function HeatMap(options, data)
 
 		// add default listeners
 		addDefaultListeners();
+
+		// add default listeners
+		addDefaultTooltips(_options);
 	}
 
 	function drawHeatMap(svg, options, data)
@@ -43,10 +66,9 @@ function HeatMap(options, data)
 		var colorScaleFn = colorScale(options);
 
 		var heatMap = svg.selectAll(".heatmap")
-			.data(data, function(d) {
-				return d.col + ':' + d.row;
-			})
+			.data(data)
 			.enter().append("rect")
+			.attr("class", "heatmap-data-rect")
 			.attr("x", function(d) {
 				return d.col * options.cellWidth;
 			})
@@ -116,6 +138,17 @@ function HeatMap(options, data)
 	function addDefaultListeners()
 	{
 		// TODO add listeners..
+	}
+
+	function addDefaultTooltips(options)
+	{
+		var dataTipFn = options.dataTooltipFn;
+
+		if (_.isFunction(dataTipFn))
+		{
+			//dataTipFn(_svg.selectAll(".heatmap-data-rect"));
+			dataTipFn($(options.el).find(".heatmap-data-rect"));
+		}
 	}
 
 	this.init = init;
