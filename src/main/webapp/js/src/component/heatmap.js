@@ -11,22 +11,31 @@ function HeatMap(options, matrix)
 		//colorScaleRange: colorbrewer.RdBu[3].reverse(),
 		colorScaleDomain: [-1, 0, 1], // [min, mid, max] values for color scale domain
 		animationDuration: 1000, // transition duration (in ms) used for animations
+		threshold: {neg: 0, pos: 0}, // threshold to ignore tooltips
 		/**
 		 * Default data point tooltip function.
 		 *
 		 * @param selection target selection (assuming data rectangles)
 		 */
 		dataTooltipFn: function(selection) {
-			var options = {
-				content: {text: function(event, api) {
-					var model = {datum: d3.selectAll(this).datum()};
+			var options = ViewUtil.defaultTooltipOptions();
+
+			var display = {
+				score: "Score", // TODO W_ij
+				rowHeader: "Perturbation",
+				colHeader: "Protein"
+			};
+
+			options.content = {
+				text: function(event, api) {
+					var model = {
+						datum: d3.selectAll(this).datum(),
+						display: display
+					};
+
 					var tooltipView = new HeatMapTipView({model: model});
 					return tooltipView.compileTemplate();
-				}},
-				hide: {fixed: true, delay: 100, event: 'mouseout'},
-				show: {event: 'mouseover'},
-				style: {classes: 'qtip-light qtip-rounded qtip-shadow'},
-				position: {my:'bottom left', at:'top center' , viewport: $(window)}
+				}
 			};
 
 			$(selection).qtip(options);
@@ -68,7 +77,19 @@ function HeatMap(options, matrix)
 		var heatMap = svg.selectAll(".heatmap")
 			.data(data)
 			.enter().append("rect")
-			.attr("class", "heatmap-data-rect")
+			.attr("class", function(d) {
+				var value = "heatmap-data-rect";
+
+				// this is to ignore rectangles with values below threshold
+				// when adding tooltip
+				if (d.score <= options.threshold.neg ||
+				    d.score >= options.threshold.pos)
+				{
+					value += " heatmap-tooltip";
+				}
+
+				return value;
+			})
 			.attr("x", function(d) {
 				return d.col * options.cellWidth;
 			})
@@ -146,8 +167,7 @@ function HeatMap(options, matrix)
 
 		if (_.isFunction(dataTipFn))
 		{
-			//dataTipFn(_svg.selectAll(".heatmap-data-rect"));
-			dataTipFn($(options.el).find(".heatmap-data-rect"));
+			dataTipFn($(options.el).find(".heatmap-tooltip"));
 		}
 	}
 

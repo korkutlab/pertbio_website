@@ -45,7 +45,13 @@ $(document).ready(function() {
 				rowHeader: true});
 
 			// init HeatMap view
-			var model = {matrix: matrix};
+			var model = {
+				matrix: matrix,
+				heatMapOpts: {
+					threshold: {neg: -0.05, pos: 0.05}
+				}
+			};
+
 			var viewOpts = {el: "#heatmap1", model: model};
 			var heatmapView = new HeatMapView(viewOpts);
 			heatmapView.render();
@@ -59,37 +65,66 @@ $(document).ready(function() {
 
 	matrixData = new MatrixData({name: "decimation_models|models1|model_1"});
 
-	// fetches matrix data from server
-	matrixData.fetch({
+	var nodeIndexData = new MatrixData(
+		{name: "decimation_models|node_index"});
+
+	nodeIndexData.fetch({
 		type: "POST",
 		dataType: "text",
 		data: {name: matrixData.get("name")},
 		success: function(collection, response, options)
 		{
-			var matrix = MatrixParser.parseInput({
+			var indexMatrix = MatrixParser.parseInput({
 				input: response,
-				columnHeader: false,
-				rowHeader: false});
+				rowHeader: true,
+				columnHeader: false
+			});
 
-			// init HeatMap view
-			var model = {matrix: matrix,
-				heatMapOpts: {
-					colorScaleRange: ["#0000FF", "#FDFDFD", "#FDFDFD", "#FDFDFD", "#FF0000"],
-					colorScaleDomain: [-1, -0.21, 0, 0.21, 1]
+			// fetches matrix data from server
+			matrixData.fetch({
+				type: "POST",
+				dataType: "text",
+				data: {name: matrixData.get("name")},
+				success: function(collection, response, options)
+				{
+					var matrix = MatrixParser.parseInput({
+						input: response,
+						columnHeader: false,
+						rowHeader: false});
+
+					matrix.columnHeaders = indexMatrix.rowHeaders;
+					matrix.rowHeaders = indexMatrix.rowHeaders;
+
+					// init HeatMap view
+					var model = {
+						matrix: matrix,
+						heatMapOpts: {
+							colorScaleRange: ["#0000FF", "#FDFDFD", "#FDFDFD", "#FDFDFD", "#FF0000"],
+							colorScaleDomain: [-1, -0.21, 0, 0.21, 1],
+							threshold: {neg: -0.21, pos: 0.21}
+						}
+					};
+
+					var viewOpts = {
+						el: "#heatmap2",
+						model: model
+					};
+					var heatmapView = new HeatMapView(viewOpts);
+					heatmapView.render();
+				},
+				error: function(collection, response, options)
+				{
+					ViewUtil.displayErrorMessage(
+						"Error retrieving matrix data.");
 				}
-			};
-
-			var viewOpts = {
-				el: "#heatmap2",
-				model: model
-			};
-			var heatmapView = new HeatMapView(viewOpts);
-			heatmapView.render();
+			});
 		},
 		error: function(collection, response, options)
 		{
 			ViewUtil.displayErrorMessage(
-				"Error retrieving matrix data.");
+				"Error retrieving node index data.");
 		}
 	});
+
+
 });

@@ -24,7 +24,10 @@ var HeatMapTipView = Backbone.View.extend({
 	compileTemplate: function()
 	{
 		// pass variables in using Underscore.js template
-		var variables = {datum: this.model.datum};
+		var variables = {
+			datum: this.model.datum,
+			display: this.model.display
+		};
 
 		// compile the template using underscore
 		var templateFn = _.template($("#heatmap_tip_template").html());

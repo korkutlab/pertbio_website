@@ -111,9 +111,9 @@
 
 	<script type="text/template" id="heatmap_tip_template">
 		[{{datum.row}}, {{datum.col}}]<br>
-		Score: {{datum.score}}<br>
-		Row Header: {{datum.rowHeader}}<br>
-		Col Header: {{datum.colHeader}}<br>
+		{{display.score}}: {{datum.score}}<br>
+		{{display.rowHeader}}: {{datum.rowHeader}}<br>
+		{{display.colHeader}}: {{datum.colHeader}}<br>
 	</script>
 
     <div id="main_network_view"></div>
