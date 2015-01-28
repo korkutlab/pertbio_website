@@ -72,14 +72,16 @@ $(document).ready(function() {
 				rowHeader: false});
 
 			// init HeatMap view
-			var model = {matrix: matrix};
-			var viewOpts = {
-				el: "#heatmap2",
-				model: model,
+			var model = {matrix: matrix,
 				heatMapOpts: {
 					colorScaleRange: ["#0000FF", "#FDFDFD", "#FDFDFD", "#FDFDFD", "#FF0000"],
-					colorScaleDomain: [-1, -0.2, 0, 0.2, 1]
+					colorScaleDomain: [-1, -0.21, 0, 0.21, 1]
 				}
+			};
+
+			var viewOpts = {
+				el: "#heatmap2",
+				model: model
 			};
 			var heatmapView = new HeatMapView(viewOpts);
 			heatmapView.render();
