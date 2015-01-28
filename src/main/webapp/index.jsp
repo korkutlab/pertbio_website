@@ -3,25 +3,6 @@
 <%@page import="org.springframework.web.context.WebApplicationContext"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 
-<%--
-  ~ Copyright 2014 Memorial-Sloan Kettering Cancer Center.
-  ~
-  ~ This file is part of GraphViz.
-  ~
-  ~ GraphViz is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU Lesser General Public License as published by
-  ~ the Free Software Foundation, either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ GraphViz is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~ GNU Lesser General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU Lesser General Public License
-  ~ along with GraphViz. If not, see <http://www.gnu.org/licenses/>.
-  --%>
-
 <%
     WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(application);
     //String pcURL = (String) context.getBean("pathwayCommonsURLStr");
@@ -35,24 +16,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- jQuery UI -->
-    <!--link href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet"-->
 	<link href="css/jquery-ui.min.css" rel="stylesheet">
 
-      <!-- Loading Bootstrap -->
+    <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet">
 
-    <!-- Loading Flat UI -->
+    <!-- Flat UI -->
     <!--link href="css/flat-ui.css" rel="stylesheet"-->
     <!--link rel="shortcut icon" href="images/favicon.ico"-->
 
     <link href="css/jquery.fancybox-1.3.4.css" rel="stylesheet">
 	<link href="css/jquery.qtip.min.css" rel="stylesheet">
 
-    <!-- Loading cytoscape.js plugins -->
+    <!-- cytoscape.js -->
     <link href="css/jquery.cytoscape-panzoom.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
-    <!-- Loading Peralyzer; this should always be the last to call! -->
+    <!-- Peralyzer; this should always be the last to call! -->
 	<link href="css/peralyzer.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
@@ -64,7 +44,6 @@
   <body>
 	<!-- JS libraries -->
 	<script src="js/lib/jquery-2.1.3.min.js"></script>
-	<!--script src="js/lib/jquery-ui-1.10.3.custom.min.js"></script-->
 	<script src="js/lib/jquery-ui.min.js"></script>
 	<script src="js/lib/jquery.dropkick-1.0.0.js"></script>
 	<script src="js/lib/custom_checkbox_and_radio.js"></script>
