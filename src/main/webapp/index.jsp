@@ -110,11 +110,15 @@
 	</script>
 
 	<script type="text/template" id="heatmap_tip_template">
-		{{value}}
+		[{{datum.row}}, {{datum.col}}]<br>
+		Score: {{datum.score}}<br>
+		Row Header: {{datum.rowHeader}}<br>
+		Col Header: {{datum.colHeader}}<br>
 	</script>
 
     <div id="main_network_view"></div>
-	<div id="main_heatmap_view"></div>
+	<div id="heatmap1"></div>
+	<div id="heatmap2"></div>
 
   </body>
 </html>

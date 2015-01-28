@@ -1,4 +1,4 @@
-function HeatMap(options, data)
+function HeatMap(options, matrix)
 {
 	/**
 	 * Default visual options.
@@ -19,7 +19,7 @@ function HeatMap(options, data)
 		dataTooltipFn: function(selection) {
 			var options = {
 				content: {text: function(event, api) {
-					var model = {value: d3.selectAll(this).datum().score};
+					var model = {datum: d3.selectAll(this).datum()};
 					var tooltipView = new HeatMapTipView({model: model});
 					return tooltipView.compileTemplate();
 				}},
@@ -44,12 +44,12 @@ function HeatMap(options, data)
 		var node = $(_options.el)[0];
 		var container = d3.select(node);
 
-		var heatMapData = HeatMapDataUtil.processData(data);
+		var heatMapData = HeatMapDataUtil.processData(matrix);
 
 		// create svg element & update its reference
 		var svg = createSvg(container,
-		                    calculateInitialWidth(_options, data),
-		                    calculateInitialHeight(_options, data));
+		                    calculateInitialWidth(_options, matrix.data),
+		                    calculateInitialHeight(_options, matrix.data));
 		_svg = svg;
 
 		drawHeatMap(svg, _options, heatMapData);
@@ -57,7 +57,7 @@ function HeatMap(options, data)
 		// add default listeners
 		addDefaultListeners();
 
-		// add default listeners
+		// add default tooltips
 		addDefaultTooltips(_options);
 	}
 

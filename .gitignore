@@ -1,5 +1,6 @@
 src/main/resources/network_models/*
 src/main/resources/matrix_data/*
+src/main/resources/matrix_data/decimation_models/*
 src/main/resources/spring/peralyzer.properties
 .idea/*
 *.iml

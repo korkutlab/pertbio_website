@@ -32,19 +32,56 @@ $(document).ready(function() {
 
 	var matrixData = new MatrixData({name: "skmel133_proteomic_clustered_data"});
 
-	// fetches study data from server
+	// fetches matrix data from server
 	matrixData.fetch({
 		type: "POST",
 		dataType: "text",
 		data: {name: matrixData.get("name")},
 		success: function(collection, response, options)
 		{
-			var matrix = MatrixParser.parseInput(response);
+			var matrix = MatrixParser.parseInput({
+				input: response,
+				columnHeader: true,
+				rowHeader: true});
 
 			// init HeatMap view
 			var model = {matrix: matrix};
-			var heatmapOpts = {el: "#main_heatmap_view", model: model};
-			var heatmapView = new HeatMapView(heatmapOpts);
+			var viewOpts = {el: "#heatmap1", model: model};
+			var heatmapView = new HeatMapView(viewOpts);
+			heatmapView.render();
+		},
+		error: function(collection, response, options)
+		{
+			ViewUtil.displayErrorMessage(
+				"Error retrieving matrix data.");
+		}
+	});
+
+	matrixData = new MatrixData({name: "decimation_models|models1|model_1"});
+
+	// fetches matrix data from server
+	matrixData.fetch({
+		type: "POST",
+		dataType: "text",
+		data: {name: matrixData.get("name")},
+		success: function(collection, response, options)
+		{
+			var matrix = MatrixParser.parseInput({
+				input: response,
+				columnHeader: false,
+				rowHeader: false});
+
+			// init HeatMap view
+			var model = {matrix: matrix};
+			var viewOpts = {
+				el: "#heatmap2",
+				model: model,
+				heatMapOpts: {
+					colorScaleRange: ["#0000FF", "#FDFDFD", "#FDFDFD", "#FDFDFD", "#FF0000"],
+					colorScaleDomain: [-1, -0.2, 0, 0.2, 1]
+				}
+			};
+			var heatmapView = new HeatMapView(viewOpts);
 			heatmapView.render();
 		},
 		error: function(collection, response, options)

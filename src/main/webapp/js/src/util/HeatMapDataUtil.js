@@ -1,23 +1,36 @@
 var HeatMapDataUtil = (function()
 {
 	/**
-	 * Converts a 2D numerical data array into a 1D array of objects.
+	 * Converts a matrix object into a 1D array of objects.
 	 *
-	 * @param data  2D array of numerical data
+	 * @param matrix    object (data: 2D-array, rowHeaders: array, columnHeaders: array)
 	 */
-	function processData(data)
+	function processData(matrix)
 	{
 		var heatMapData = [];
+		var data = matrix.data; // 2D array of numerical data
 
 		for (var i=0; i < data.length; i++)
 		{
 			for (var j=0; j < data[i].length; j++)
 			{
-				heatMapData.push({
+				var dataPoint = {
 					score: data[i][j],
 					row: i,
 					col: j
-				});
+				};
+
+				if (matrix.rowHeaders.length > 0)
+				{
+					dataPoint.rowHeader = matrix.rowHeaders[i];
+				}
+
+				if (matrix.columnHeaders.length > 0)
+				{
+					dataPoint.colHeader = matrix.columnHeaders[j];
+				}
+
+				heatMapData.push(dataPoint);
 			}
 		}
 

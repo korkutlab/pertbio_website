@@ -25,7 +25,7 @@ public class MatrixDataService
 	public String getMatrixData(String name) throws IOException
 	{
 		String filename = this.getMatrixDataResource().getFile().getAbsolutePath() +
-		                  "/" + name + ".txt";
+		                  "/" + name.replaceAll("\\|", "/") + ".txt";
 
 		BufferedReader in = new BufferedReader(new FileReader(filename));
 		String line;

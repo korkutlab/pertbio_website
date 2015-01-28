@@ -6,44 +6,69 @@
  */
 var MatrixParser = (function()
 {
+	// default parse options
+	var _defaultOpts = {
+		input: null, //input string/file
+		columnHeader: false, // whether the input contains column headers (the first row)
+		rowHeader: false // whether the input contains row headers (the first column)
+	};
+
 	/**
 	 * Parses the entire input data and creates a 2D array of matrix data.
 	 *
-	 * @param input         input string/file.
+	 * @param options       options object (see _defaultOpts).
 	 * @returns {Object}    an object representing the matrix data.
 	 */
-	function parseInput(input)
+	function parseInput(options)
 	{
+		// merge options with default options to use defaults for missing values
+		options = jQuery.extend(true, {}, _defaultOpts, options);
+
+		var input = options.input;
+
 		var matrixData = [];
+
 		var rowHeaders = [];
-		var columnHeaders;
+		var columnHeaders = [];
+
+		var indexMap = null;
+		// starting index for column data
+		var colStart = options.rowHeader == true ? 1 :0;
+		// starting index for row data
+		var rowStart = options.columnHeader == true ? 1 :0;
 
 		var lines = input.split("\n");
 
 		if (lines.length > 0)
 		{
-			// assuming first line is a header
-			var indexMap = buildIndexMap(lines[0]);
+			if (options.columnHeader)
+			{
+				// assuming first line is a header
+				indexMap = buildIndexMap(lines[0]);
 
-			// split by whitespace and then get all but the first element,
-			// (first element is the header of the column headers)
-			columnHeaders = lines[0].trim().split(/\s/).slice(1);
+				// split by whitespace and then get all headers
+				// (except the first one if there are row headers)
+				columnHeaders = lines[0].trim().split(/\s+/).slice(colStart);
+			}
 
 			// rest should be data
-			for (var i=1; i < lines.length; i++)
+			for (var i=rowStart; i < lines.length; i++)
 			{
 				// skip empty lines
 				if (lines[i].length > 0)
 				{
-					var parts = lines[i].trim().split(/\s/);
+					var parts = lines[i].trim().split(/\s+/);
 
 					if (parts.length > 1)
 					{
-						// first element is the row heaher
-						rowHeaders.push(parts[0]);
+						// first element is the row header
+						if (options.rowHeader)
+						{
+							rowHeaders.push(parts[0]);
+						}
 
 						// rest is matrix data
-						matrixData.push(parts.slice(1));
+						matrixData.push(parts.slice(colStart));
 					}
 				}
 			}
