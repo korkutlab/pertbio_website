@@ -49,6 +49,9 @@ var ModelView = Backbone.View.extend({
 			var modelName = modelBox.val();
 			self.loadModel(self.$el.find(".heatmap-container"), modelName)
 		});
+
+		// trigger change function to load initial model...
+		modelBox.change();
 	},
 	loadModel: function(target, modelName)
 	{

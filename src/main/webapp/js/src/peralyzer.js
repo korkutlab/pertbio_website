@@ -21,7 +21,7 @@ $(document).ready(function() {
 				model: {data: response.elements}};
 
 			var netView = new NetworkView(netViewOpts);
-			netView.render();
+			//netView.render();
 		},
 		error: function(collection, response, options)
 		{

@@ -116,10 +116,10 @@
 		<div class="heatmap-container"></div>
 	</script>
 
-	<div id="main_network_view"></div>
+	<div id="model_view"></div>
+	<!--div id="main_network_view"></div-->
 	<div id="heatmap1"></div>
 	<div id="heatmap2"></div>
 
-	<div id="model_view"></div>
   </body>
 </html>
