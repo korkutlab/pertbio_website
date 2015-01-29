@@ -4,7 +4,7 @@ var ModelView = Backbone.View.extend({
 		var self = this;
 
 		// TODO self.model.directory
-		var names = new MatrixList({directory: "decimation_models|models1"});
+		var names = new MatrixList({directory: self.model.directory});
 
 		names.fetch({
 			success: function(collection, response, options)
@@ -52,13 +52,12 @@ var ModelView = Backbone.View.extend({
 	},
 	loadModel: function(target, modelName)
 	{
+		var self = this;
 		// TODO loader image...
 
-		// TODO self.model.directory
-		var baseDir = "decimation_models|models1";
+		var baseDir = self.model.directory;
 
-		var nodeIndexData = new MatrixData(
-			{name: "decimation_models|node_index"});
+		var nodeIndexData = new MatrixData({name: self.model.nodeIndexFile});
 
 		nodeIndexData.fetch({
 			type: "POST",

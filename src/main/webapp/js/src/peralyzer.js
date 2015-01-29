@@ -63,6 +63,13 @@ $(document).ready(function() {
 		}
 	});
 
-	var modelView = new ModelView({el: "#model_view"});
+	var modelView = new ModelView({
+		el: "#model_view",
+		model: {
+			directory: "decimation_models|models1",
+			nodeIndexFile: "decimation_models|node_index"
+		}
+	});
+
 	modelView.render();
 });
