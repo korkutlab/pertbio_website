@@ -82,7 +82,15 @@
 	<script src="js/src/view/HeatMapView.js"></script>
 	<script src="js/src/view/HeatMapTipView.js"></script>
 	<script src="js/src/view/NetworkView.js"></script>
+	<script src="js/src/view/ModelView.js"></script>
 	<script src="js/src/peralyzer.js"></script>
+
+	<script type="text/template" id="loader_template">
+		<div class="network-loading">
+			<h4>Loading network...</h4>
+			<img src="images/loading.gif" alt="loading network...">
+		</div>
+	</script>
 
 	<script type="text/template" id="noty-error-msg-template">
 		{{errorMsg}}
@@ -95,9 +103,23 @@
 		{{display.colHeader}}: {{datum.colHeader}}<br>
 	</script>
 
-    <div id="main_network_view"></div>
+	<script type="text/template" id="select_item_template">
+		<option value="{{selectId}}">{{selectName}}</option>
+	</script>
+
+	<script type="text/template" id="model_visualizer_template">
+		<div class="heatmap-controls">
+			<select class="model-box span3" tabindex="1">
+				{{modelOptions}}
+			</select>
+		</div>
+		<div class="heatmap-container"></div>
+	</script>
+
+	<div id="main_network_view"></div>
 	<div id="heatmap1"></div>
 	<div id="heatmap2"></div>
 
+	<div id="model_view"></div>
   </body>
 </html>

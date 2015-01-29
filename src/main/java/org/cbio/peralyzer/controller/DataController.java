@@ -58,7 +58,8 @@ public class DataController
 		return new ResponseEntity<String>(response, headers, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "matrix/{name}", method = {RequestMethod.GET, RequestMethod.POST},
+	@RequestMapping(value = "matrix/{name}",
+	                method = {RequestMethod.GET, RequestMethod.POST},
 	                headers = "Accept=application/text+plain")
 	public ResponseEntity<String> getMatrixData(@PathVariable String name)
 	{
@@ -73,5 +74,24 @@ public class DataController
 		}
 
 		return new ResponseEntity<String>(response, headers, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "list/matrix/{directory}",
+	                method = {RequestMethod.GET, RequestMethod.POST},
+	                headers = "Accept=application/json")
+	public ResponseEntity<String> getMatrixList(@PathVariable String directory)
+	{
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json; charset=utf-8");
+
+		String matrices;
+
+		try {
+			matrices = matrixDataService.listMatrices(directory);
+		} catch (IOException e) {
+			return new ResponseEntity<String>(e.getMessage(), headers, HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<String>(matrices, headers, HttpStatus.OK);
 	}
 }

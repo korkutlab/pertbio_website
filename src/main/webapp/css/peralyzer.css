@@ -5,3 +5,14 @@
 	border-radius: 0.25em;
 	margin: 0.25em;
 }
+
+.tooltip-superscript {
+	position: relative;
+	left: -.5em;
+}
+
+.qtip-custom {
+	font-size: 1.2em;
+	font-family: Helvetica Neue, Arial, sans-serif;
+	line-height: 1.2em;
+}

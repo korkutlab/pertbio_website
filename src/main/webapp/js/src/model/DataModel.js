@@ -19,3 +19,14 @@ var NetworkData = Backbone.Model.extend({
 		return "data/network/" + this.get("model");
     }
 });
+
+var MatrixList = Backbone.Model.extend({
+    initialize: function(attributes)
+	{
+		this.list = attributes;
+	},
+	url: function()
+	{
+		return "data/list/matrix/" + this.get("directory");
+    }
+});

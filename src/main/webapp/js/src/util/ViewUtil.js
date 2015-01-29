@@ -35,7 +35,9 @@ var ViewUtil = (function()
 			content: null,
 			hide: {fixed: true, delay: 100, event: 'mouseout'},
 			show: {event: 'mouseover'},
-			style: {classes: 'qtip-light qtip-rounded qtip-shadow'},
+			style: {
+				classes: 'qtip-light qtip-rounded qtip-shadow qtip-custom'
+			},
 			position: {my:'bottom left', at:'top center' , viewport: $(window)}
 		};
 	}

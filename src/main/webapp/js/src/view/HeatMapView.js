@@ -6,6 +6,8 @@ var HeatMapView = Backbone.View.extend({
 		var options = self.model.heatMapOpts || {};
 		options.el = self.el;
 
+		$(self.el).empty();
+
 		var heatmap = new HeatMap(options,
 			matrix);
 

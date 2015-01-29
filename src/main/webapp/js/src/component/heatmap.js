@@ -21,9 +21,9 @@ function HeatMap(options, matrix)
 			var options = ViewUtil.defaultTooltipOptions();
 
 			var display = {
-				score: "Score", // TODO W_ij
-				rowHeader: "Perturbation",
-				colHeader: "Protein"
+				score: "X<sub>i</sub><sup class='tooltip-superscript'>u</sup>",
+				rowHeader: "Perturbation (u)",
+				colHeader: "Protein (i)"
 			};
 
 			options.content = {
