@@ -28,3 +28,18 @@
 .text-align-center {
 	text-align: center;
 }
+
+
+/* LEGEND style */
+
+.legend-axis path {
+	display: none;
+}
+
+.legend-axis line {
+	stroke: #666666;
+}
+
+.legend-axis text {
+	fill: #666666;
+}

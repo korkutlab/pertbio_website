@@ -46,15 +46,15 @@ var ModelView = Backbone.View.extend({
 		var modelBox = self.$el.find(".model-box");
 
 		modelBox.change(function(evt) {
-			var container = self.$el.find(".heatmap-container");
+			var target = self.$el.find(".heatmap-view");
 
 			// display loader message before actually loading the data
 			// it will be replaced by the heat map view once data is fetched
-			$(container).html(_.template(
+			$(target).html(_.template(
 				$("#loader_template").html(), {}));
 
 			var modelName = modelBox.val();
-			self.loadModel(container, modelName);
+			self.loadModel(target, modelName);
 		});
 
 		// trigger change function to load initial model...

@@ -73,10 +73,12 @@
 	<!--script src="js/lib/icon-font-ie7.js"></script>
 	<![endif]-->
 
-	<script src="js/src/component/heatmap.js"></script>
+	<script src="js/src/component/HeatMap.js"></script>
+	<script src="js/src/component/GradientLegend.js"></script>
 	<script src="js/src/util/HeatMapDataUtil.js"></script>
 	<script src="js/src/util/MatrixParser.js"></script>
 	<script src="js/src/util/ViewUtil.js"></script>
+	<script src="js/src/util/SvgUtil.js"></script>
 	<script src="js/src/model/DataModel.js"></script>
 	<script src="js/src/view/NotyView.js"></script>
 	<script src="js/src/view/HeatMapView.js"></script>
@@ -126,7 +128,12 @@
 				{{modelOptions}}
 			</select>
 		</div>
+		<div class="heatmap-view"></div>
+	</script>
+
+	<script type="text/template" id="heatmap_view_template">
 		<div class="heatmap-container"></div>
+		<div class="legend-container"></div>
 	</script>
 
 	<div id="model_view"></div>

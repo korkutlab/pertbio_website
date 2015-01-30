@@ -1,3 +1,11 @@
+/**
+ * D3 component to draw a heat map for the given matrix.
+ *
+ * @param options   heat map options (see _defaultOpts)
+ * @param matrix    data matrix
+ *
+ * @author Selcuk Onur Sumer
+ */
 function HeatMap(options, matrix)
 {
 	/**
@@ -56,7 +64,7 @@ function HeatMap(options, matrix)
 		var heatMapData = HeatMapDataUtil.processData(matrix);
 
 		// create svg element & update its reference
-		var svg = createSvg(container,
+		var svg = SvgUtil.createSvg(container,
 		                    calculateInitialWidth(_options, matrix.data),
 		                    calculateInitialHeight(_options, matrix.data));
 		_svg = svg;
@@ -101,24 +109,6 @@ function HeatMap(options, matrix)
 			.attr("fill", function(d) {
 				return colorScaleFn(d.score);
 			});
-	}
-
-	/**
-	 * Creates the main svg (graphical) component.
-	 *
-	 * @param container main container (div, etc.)
-	 * @param width     width of the svg area
-	 * @param height    height of the svg area
-	 * @return {object} svg component
-	 */
-	function createSvg(container, width, height)
-	{
-		var svg = container.append("svg");
-
-		svg.attr('width', width);
-		svg.attr('height', height);
-
-		return svg;
 	}
 
 	function calculateInitialWidth(options, data)
