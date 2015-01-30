@@ -8,11 +8,23 @@
 
 .tooltip-superscript {
 	position: relative;
-	left: -.5em;
+	left: -.4em;
 }
 
 .qtip-custom {
-	font-size: 1.2em;
+	font-size: 1.1em;
 	font-family: Helvetica Neue, Arial, sans-serif;
 	line-height: 1.2em;
+}
+
+.text-align-right {
+	text-align: right;
+}
+
+.text-align-left {
+	text-align: left;
+}
+
+.text-align-center {
+	text-align: center;
 }

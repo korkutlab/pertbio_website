@@ -87,8 +87,8 @@
 
 	<script type="text/template" id="loader_template">
 		<div class="network-loading">
-			<h4>Loading network...</h4>
-			<img src="images/loading.gif" alt="loading network...">
+			<h4>Loading...</h4>
+			<img src="images/loading.gif" alt="Loading...">
 		</div>
 	</script>
 
@@ -96,11 +96,24 @@
 		{{errorMsg}}
 	</script>
 
-	<script type="text/template" id="heatmap_tip_template">
-		[{{datum.row}}, {{datum.col}}]<br>
-		{{display.score}}: {{datum.score}}<br>
+	<script type="text/template" id="pert_heatmap_tip_template">
+		X <sub>i</sub><sup class='tooltip-superscript'>u</sup>=
+		{{parseFloat(datum.score).toFixed(2)}}<br>
 		{{display.rowHeader}}: {{datum.rowHeader}}<br>
 		{{display.colHeader}}: {{datum.colHeader}}<br>
+	</script>
+
+	<script type="text/template" id="prot_heatmap_tip_template">
+		<table class='prot-heatmap-tip-table'>
+			<tr>
+				<td class='text-align-center'>{{datum.rowHeader}} &rarr; {{datum.colHeader}}</td>
+			</tr>
+			<tr>
+				<td class='text-align-center'>
+					W<sub>ij</sub>={{parseFloat(datum.score).toFixed(2)}}
+				</td>
+			</tr>
+		</table>
 	</script>
 
 	<script type="text/template" id="select_item_template">

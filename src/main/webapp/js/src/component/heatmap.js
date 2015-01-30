@@ -21,16 +21,16 @@ function HeatMap(options, matrix)
 			var options = ViewUtil.defaultTooltipOptions();
 
 			var display = {
-				score: "X<sub>i</sub><sup class='tooltip-superscript'>u</sup>",
-				rowHeader: "Perturbation (u)",
-				colHeader: "Protein (i)"
+				rowHeader: "Perturbation(u)",
+				colHeader: "Protein(i)"
 			};
 
 			options.content = {
 				text: function(event, api) {
 					var model = {
 						datum: d3.selectAll(this).datum(),
-						display: display
+						display: display,
+						tipTemplate: "#pert_heatmap_tip_template"
 					};
 
 					var tooltipView = new HeatMapTipView({model: model});

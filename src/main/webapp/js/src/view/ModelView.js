@@ -46,8 +46,15 @@ var ModelView = Backbone.View.extend({
 		var modelBox = self.$el.find(".model-box");
 
 		modelBox.change(function(evt) {
+			var container = self.$el.find(".heatmap-container");
+
+			// display loader message before actually loading the data
+			// it will be replaced by the heat map view once data is fetched
+			$(container).html(_.template(
+				$("#loader_template").html(), {}));
+
 			var modelName = modelBox.val();
-			self.loadModel(self.$el.find(".heatmap-container"), modelName)
+			self.loadModel(container, modelName);
 		});
 
 		// trigger change function to load initial model...
@@ -97,7 +104,25 @@ var ModelView = Backbone.View.extend({
 							heatMapOpts: {
 								colorScaleRange: ["#0000FF", "#FDFDFD", "#FDFDFD", "#FDFDFD", "#FF0000"],
 								colorScaleDomain: [-1, -0.21, 0, 0.21, 1],
-								threshold: {neg: -0.21, pos: 0.21}
+								threshold: {neg: -0.21, pos: 0.21},
+								dataTooltipFn: function(selection) {
+									var options = ViewUtil.defaultTooltipOptions();
+
+									options.content = {
+										text: function(event, api) {
+											var model = {
+												datum: d3.selectAll(this).datum(),
+												display: {},
+												tipTemplate: "#prot_heatmap_tip_template"
+											};
+
+											var tooltipView = new HeatMapTipView({model: model});
+											return tooltipView.compileTemplate();
+										}
+									};
+
+									$(selection).qtip(options);
+								}
 							}
 						};
 

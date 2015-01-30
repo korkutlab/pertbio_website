@@ -30,7 +30,7 @@ var HeatMapTipView = Backbone.View.extend({
 		};
 
 		// compile the template using underscore
-		var templateFn = _.template($("#heatmap_tip_template").html());
+		var templateFn = _.template($(this.model.tipTemplate).html());
 		return templateFn(variables);
 	}
 });
