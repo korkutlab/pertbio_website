@@ -37,7 +37,25 @@ var HeatMapDataUtil = (function()
 		return heatMapData;
 	}
 
+	/**
+	 * Creates an index map for the given array of values.
+	 *
+	 * @param data          data array
+	 * @returns {Object}    index map keyed by values
+	 */
+	function getIndexMap(data)
+	{
+		var map = {};
+
+		_.each(data, function(ele, idx) {
+			map[ele] = idx;
+		});
+
+		return map;
+	}
+
 	return {
-		processData: processData
+		processData: processData,
+		getIndexMap: getIndexMap
 	};
 })();

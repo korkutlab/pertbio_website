@@ -20,6 +20,12 @@ function HeatMap(options, matrix)
 		colorScaleDomain: [-1, 0, 1], // [min, mid, max] values for color scale domain
 		animationDuration: 1000, // transition duration (in ms) used for animations
 		threshold: {neg: 0, pos: 0}, // threshold to ignore tooltips
+		showRowHeaders: true,
+		showColHeaders: true,
+		labelFontFamily: "sans-serif", // font type of the top label
+		labelFillColor: "#2E3436",     // font color of the header labels
+		labelFontWeight: "normal",     // font weight of the header labels
+		leftPanelPadding: 5,           // padding between left panel labels and heatmap
 		/**
 		 * Default data point tooltip function.
 		 *
@@ -55,6 +61,9 @@ function HeatMap(options, matrix)
 	// merge options with default options to use defaults for missing values
 	var _options = jQuery.extend(true, {}, _defaultOpts, options);
 
+	// max label length for the left panel (calculated dynamically)
+	var _leftPanelLabelLength = 0;
+
 	function init()
 	{
 		// selecting using jQuery node to support both string and jQuery selector values
@@ -64,10 +73,26 @@ function HeatMap(options, matrix)
 		var heatMapData = HeatMapDataUtil.processData(matrix);
 
 		// create svg element & update its reference
-		var svg = SvgUtil.createSvg(container,
-		                    calculateInitialWidth(_options, matrix.data),
-		                    calculateInitialHeight(_options, matrix.data));
+		// (passing initial width and height as 0, cause those will be dynamically calculated
+		// wrt variable length of the label panels)
+		var svg = SvgUtil.createSvg(container, 0, 0);
 		_svg = svg;
+
+		if (_options.showRowHeaders)
+		{
+			drawRowHeaders(svg, _options, matrix.rowHeaders);
+
+			// adjust svg width after drawing headers
+			svg.attr("width", calculateInitialWidth(_options, matrix.data));
+		}
+
+		if (_options.showColHeaders)
+		{
+			//TODO drawColHeaders(svg, _options, matrix.columnHeaders);
+
+			// adjust svg width after drawing headers
+			svg.attr("height", calculateInitialHeight(_options, matrix.data));
+		}
 
 		drawHeatMap(svg, _options, heatMapData);
 
@@ -78,11 +103,45 @@ function HeatMap(options, matrix)
 		addDefaultTooltips(_options);
 	}
 
+	function drawRowHeaders(svg, options, rowHeaders)
+	{
+		var rowHeaderIndex = HeatMapDataUtil.getIndexMap(rowHeaders);
+
+		var rowHeaderGroup = svg.append("g").attr("class", "heatmap-row-headers-group");
+
+		rowHeaderGroup.selectAll(".heatmap-row-headers")
+			.data(rowHeaders)
+			.enter().append("text")
+			.text(function(d) {
+				return d;
+			})
+			.style("font-family", options.labelFontFamily)
+			.style("font-size", options.cellHeight + "px") // label font size depends on the cell height
+			.style("font-weight", options.labelFontWeight)
+			.attr("class", "heatmap-row-header")
+			.attr("x", 0)// this is the initial value, will be adjusted later...
+			.attr("y", function(d) {
+				return rowHeaderIndex[d] * options.cellHeight + options.cellHeight; // TODO + padding top
+			})
+			.attr("text-anchor", "end")
+			.attr("fill", options.labelFillColor);
+
+		// adjust actual x position
+		// TODO if dynamic calculation fails use a constant value!!
+		_leftPanelLabelLength = calculateLeftPanelWidth(rowHeaderGroup);
+
+		rowHeaderGroup.selectAll(".heatmap-row-header")
+			.attr("x", _leftPanelLabelLength);
+
+		return rowHeaderGroup;
+	}
+
 	function drawHeatMap(svg, options, data)
 	{
 		var colorScaleFn = colorScale(options);
+		var dataGroup = svg.append("g").attr("class", "heatmap-data-group");
 
-		var heatMap = svg.selectAll(".heatmap")
+		dataGroup.selectAll(".heatmap")
 			.data(data)
 			.enter().append("rect")
 			.attr("class", function(d) {
@@ -99,7 +158,7 @@ function HeatMap(options, matrix)
 				return value;
 			})
 			.attr("x", function(d) {
-				return d.col * options.cellWidth;
+				return d.col * options.cellWidth + options.leftPanelPadding + _leftPanelLabelLength ;
 			})
 			.attr("y", function(d) {
 				return d.row * options.cellHeight;
@@ -109,6 +168,24 @@ function HeatMap(options, matrix)
 			.attr("fill", function(d) {
 				return colorScaleFn(d.score);
 			});
+
+		return dataGroup;
+	}
+
+	function calculateLeftPanelWidth(rowHeaderGroup)
+	{
+		var max = 0;
+
+		rowHeaderGroup.selectAll(".heatmap-row-header").each(function(d, i){
+			var width = this.getComputedTextLength();
+
+			if (width > max)
+			{
+				max = width;
+			}
+		});
+
+		return max;
 	}
 
 	function calculateInitialWidth(options, data)
@@ -119,8 +196,10 @@ function HeatMap(options, matrix)
 		if (data != null &&
 			data.length > 0)
 		{
-			// length of a row is the number of columns
-			width = options.cellWidth * data[0].length;
+			// length of a row is the number of columns + padding
+			width = options.cellWidth * data[0].length +
+			        options.leftPanelPadding +
+			        _leftPanelLabelLength;
 		}
 
 		return width;
