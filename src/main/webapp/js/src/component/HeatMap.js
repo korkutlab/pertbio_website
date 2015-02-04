@@ -26,6 +26,7 @@ function HeatMap(options, matrix)
 		labelFillColor: "#2E3436",     // font color of the header labels
 		labelFontWeight: "normal",     // font weight of the header labels
 		leftPanelPadding: 5,           // padding between left panel labels and heatmap
+		topPanelPadding: 5,            // padding between top panel labels and heatmap
 		/**
 		 * Default data point tooltip function.
 		 *
@@ -64,6 +65,9 @@ function HeatMap(options, matrix)
 	// max label length for the left panel (calculated dynamically)
 	var _leftPanelLabelLength = 0;
 
+	// max label length for the top panel (calculated dynamically)
+	var _topPanelLabelLength = 0;
+
 	function init()
 	{
 		// selecting using jQuery node to support both string and jQuery selector values
@@ -77,22 +81,30 @@ function HeatMap(options, matrix)
 		// wrt variable length of the label panels)
 		var svg = SvgUtil.createSvg(container, 0, 0);
 		_svg = svg;
+		var rowHeaderGroup;
+		var colHeaderGroup;
 
 		if (_options.showRowHeaders)
 		{
-			drawRowHeaders(svg, _options, matrix.rowHeaders);
-
-			// adjust svg width after drawing headers
-			svg.attr("width", calculateInitialWidth(_options, matrix.data));
+			rowHeaderGroup = drawRowHeaders(svg, _options, matrix.rowHeaders);
 		}
 
 		if (_options.showColHeaders)
 		{
-			//TODO drawColHeaders(svg, _options, matrix.columnHeaders);
+			colHeaderGroup = drawColHeaders(svg, _options, matrix.columnHeaders);
 
-			// adjust svg width after drawing headers
-			svg.attr("height", calculateInitialHeight(_options, matrix.data));
+			// adjust row header position wrt dynamically calculated col header length
+			rowHeaderGroup.selectAll(".heatmap-row-header")
+				.attr("y", function(d) {
+					return parseFloat(d3.select(this).attr("y")) +
+					       _topPanelLabelLength +
+					       _options.topPanelPadding;
+				});
 		}
+
+		// adjust svg width & height after drawing headers
+		svg.attr("width", calculateInitialWidth(_options, matrix.data));
+		svg.attr("height", calculateInitialHeight(_options, matrix.data));
 
 		drawHeatMap(svg, _options, heatMapData);
 
@@ -120,20 +132,68 @@ function HeatMap(options, matrix)
 			.style("font-weight", options.labelFontWeight)
 			.attr("class", "heatmap-row-header")
 			.attr("x", 0)// this is the initial value, will be adjusted later...
-			.attr("y", function(d) {
-				return rowHeaderIndex[d] * options.cellHeight + options.cellHeight; // TODO + padding top
+			.attr("y", function(d) { // this is not the final y value in case of column headers
+				return rowHeaderIndex[d] * options.cellHeight +
+				       options.cellHeight;
 			})
 			.attr("text-anchor", "end")
 			.attr("fill", options.labelFillColor);
 
 		// adjust actual x position
 		// TODO if dynamic calculation fails use a constant value!!
-		_leftPanelLabelLength = calculateLeftPanelWidth(rowHeaderGroup);
+		_leftPanelLabelLength = calculatePanelWidth(rowHeaderGroup, "heatmap-row-header");
 
 		rowHeaderGroup.selectAll(".heatmap-row-header")
 			.attr("x", _leftPanelLabelLength);
 
 		return rowHeaderGroup;
+	}
+
+	function drawColHeaders(svg, options, colHeaders)
+	{
+		var colHeaderIndex = HeatMapDataUtil.getIndexMap(colHeaders);
+		var colHeaderGroup = svg.append("g").attr("class", "heatmap-col-headers-group");
+
+		var x = function(d)
+		{
+			return colHeaderIndex[d] * options.cellWidth +
+			options.cellWidth +
+			options.leftPanelPadding +
+			_leftPanelLabelLength;
+		};
+
+		colHeaderGroup.selectAll(".heatmap-col-headers")
+			.data(colHeaders)
+			.enter().append("text")
+			.text(function(d) {
+				return d;
+			})
+			.style("font-family", options.labelFontFamily)
+			.style("font-size", options.cellWidth + "px") // label font size depends on the cell height
+			.style("font-weight", options.labelFontWeight)
+			.attr("class", "heatmap-col-header")
+			.attr("y", 0)// this is the initial value, will be adjusted later...
+			.attr("x", function(d) {
+				return x(d);
+			})
+			.attr("text-anchor", "start")
+			.attr("fill", options.labelFillColor);
+
+		// adjust actual x position
+		// TODO if dynamic calculation fails use a constant value!!
+		_topPanelLabelLength = calculatePanelWidth(colHeaderGroup, "heatmap-col-header");
+
+		colHeaderGroup.selectAll(".heatmap-col-header")
+			.attr("y", _topPanelLabelLength);
+
+		// rotate column headers to vertical position
+		colHeaderGroup.selectAll(".heatmap-col-header")
+			.transition()
+			.attr("transform", function(d) {
+				return "rotate(-90, " + x(d) + "," + _topPanelLabelLength +")";
+			});
+
+		return colHeaderGroup;
 	}
 
 	function drawHeatMap(svg, options, data)
@@ -158,10 +218,14 @@ function HeatMap(options, matrix)
 				return value;
 			})
 			.attr("x", function(d) {
-				return d.col * options.cellWidth + options.leftPanelPadding + _leftPanelLabelLength ;
+				return d.col * options.cellWidth +
+				       options.leftPanelPadding +
+				       _leftPanelLabelLength;
 			})
 			.attr("y", function(d) {
-				return d.row * options.cellHeight;
+				return d.row * options.cellHeight +
+				       options.topPanelPadding +
+				       _topPanelLabelLength;
 			})
 			.attr("width", options.cellWidth)
 			.attr("height", options.cellHeight)
@@ -172,11 +236,11 @@ function HeatMap(options, matrix)
 		return dataGroup;
 	}
 
-	function calculateLeftPanelWidth(rowHeaderGroup)
+	function calculatePanelWidth(rowHeaderGroup, headerClass)
 	{
 		var max = 0;
 
-		rowHeaderGroup.selectAll(".heatmap-row-header").each(function(d, i){
+		rowHeaderGroup.selectAll("." + headerClass).each(function(d, i){
 			var width = this.getComputedTextLength();
 
 			if (width > max)
@@ -185,7 +249,8 @@ function HeatMap(options, matrix)
 			}
 		});
 
-		return max;
+		// returning the ceiling int value for the sake of performance
+		return Math.ceil(max);
 	}
 
 	function calculateInitialWidth(options, data)
@@ -212,7 +277,9 @@ function HeatMap(options, matrix)
 		if (data != null)
 		{
 			// length of the matrix is the number of rows
-			height = options.cellHeight * data.length;
+			height = options.cellHeight * data.length +
+			         options.topPanelPadding +
+			         _topPanelLabelLength;
 		}
 
 		return height;
