@@ -119,7 +119,7 @@ var ModelView = Backbone.View.extend({
 									$(selection).qtip(options);
 								}
 							},
-							legendTitle: "TODO", // TODO legend title for models
+							legendTitle: "W<sub>ij</sub> (Interaction Strength)",
 							legendOptions: {
 								padding: {
 									top: 0
