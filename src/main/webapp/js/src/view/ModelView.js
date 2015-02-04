@@ -55,6 +55,10 @@ var ModelView = Backbone.View.extend({
 			self.loadModel(target, modelName);
 		});
 
+		modelBox.chosen({
+			search_contains: true
+		});
+
 		// trigger change function to load initial model...
 		modelBox.change();
 	},

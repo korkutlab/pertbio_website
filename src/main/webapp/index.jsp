@@ -27,6 +27,7 @@
 
     <link href="css/jquery.fancybox-1.3.4.css" rel="stylesheet">
 	<link href="css/jquery.qtip.min.css" rel="stylesheet">
+	<link href="css/chosen.min.css" rel="stylesheet">
 
     <!-- cytoscape.js -->
     <link href="css/jquery.cytoscape-panzoom.css" rel="stylesheet">
@@ -63,6 +64,7 @@
 	<script src="js/lib/jquery.expander.min.js"></script>
 	<script src="js/lib/jquery.noty.packaged.min.js"></script>
 	<script src="js/lib/jquery.qtip.min.js"></script>
+	<script src="js/lib/chosen.jquery.min.js"></script>
 	<script src="js/lib/store.js"></script>
 	<script src="js/lib/jquery.scrollTo-1.4.3.1-min.js"></script>
 	<script src="js/lib/js_cols.min.js"></script>
@@ -124,9 +126,18 @@
 
 	<script type="text/template" id="model_visualizer_template">
 		<div class="heatmap-controls">
-			<select class="model-box span3" tabindex="1">
-				{{modelOptions}}
-			</select>
+			<table>
+				<tr>
+					<td>
+						<div class="model-select-title">Select a model to load...</div>
+						<div>
+							<select class="model-box span2" tabindex="1">
+								{{modelOptions}}
+							</select>
+						</div>
+					</td>
+				</tr>
+			</table>
 		</div>
 		<div class="heatmap-view"></div>
 	</script>
@@ -136,7 +147,7 @@
 		<div class="legend-view">
 			<table>
 				<tr>
-					<td><label class="legend-title">{{legendTitle}}</label></td>
+					<td class="legend-title">{{legendTitle}}</td>
 				</tr>
 				<tr>
 					<td><div class="legend-container"></div></td>

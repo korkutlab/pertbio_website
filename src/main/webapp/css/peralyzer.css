@@ -29,6 +29,13 @@
 	text-align: center;
 }
 
+.heatmap-controls {
+	margin-bottom: 10px;
+}
+
+.model-select-title {
+	text-align: center;
+}
 
 /* LEGEND style */
 
