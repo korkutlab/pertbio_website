@@ -8,7 +8,7 @@ var HeatMapView = Backbone.View.extend({
 		var templateFn = _.template($("#heatmap_view_template").html());
 
 		// load the compiled HTML into the Backbone "el"
-		self.$el.html(templateFn({}));
+		self.$el.html(templateFn(self.model));
 
 		var options = self.model.heatMapOpts || {};
 		options.el = self.$el.find(".heatmap-container");

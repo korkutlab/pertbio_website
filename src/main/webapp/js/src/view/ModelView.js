@@ -2,8 +2,6 @@ var ModelView = Backbone.View.extend({
 	render: function()
 	{
 		var self = this;
-
-		// TODO self.model.directory
 		var names = new MatrixList({directory: self.model.directory});
 
 		names.fetch({
@@ -63,10 +61,7 @@ var ModelView = Backbone.View.extend({
 	loadModel: function(target, modelName)
 	{
 		var self = this;
-		// TODO loader image...
-
 		var baseDir = self.model.directory;
-
 		var nodeIndexData = new MatrixData({name: self.model.nodeIndexFile});
 
 		nodeIndexData.fetch({
@@ -122,6 +117,12 @@ var ModelView = Backbone.View.extend({
 									};
 
 									$(selection).qtip(options);
+								}
+							},
+							legendTitle: "TODO", // TODO legend title for models
+							legendOptions: {
+								padding: {
+									top: 0
 								}
 							}
 						};

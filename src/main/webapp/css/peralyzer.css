@@ -43,3 +43,7 @@
 .legend-axis text {
 	fill: #666666;
 }
+
+.legend-title {
+	text-align: center;
+}

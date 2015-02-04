@@ -133,7 +133,16 @@
 
 	<script type="text/template" id="heatmap_view_template">
 		<div class="heatmap-container"></div>
-		<div class="legend-container"></div>
+		<div class="legend-view">
+			<table>
+				<tr>
+					<td><label class="legend-title">{{legendTitle}}</label></td>
+				</tr>
+				<tr>
+					<td><div class="legend-container"></div></td>
+				</tr>
+			</table>
+		</div>
 	</script>
 
 	<div id="model_view"></div>

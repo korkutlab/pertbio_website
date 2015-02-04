@@ -49,6 +49,12 @@ $(document).ready(function() {
 				matrix: matrix,
 				heatMapOpts: {
 					threshold: {neg: -0.05, pos: 0.05}
+				},
+				legendTitle: "Proteomic Level Change",
+				legendOptions: {
+					padding: {
+						top: 0
+					}
 				}
 			};
 
