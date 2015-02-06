@@ -10,7 +10,8 @@ var MatrixParser = (function()
 	var _defaultOpts = {
 		input: null, //input string/file
 		columnHeader: false, // whether the input contains column headers (the first row)
-		rowHeader: false // whether the input contains row headers (the first column)
+		rowHeader: false, // whether the input contains row headers (the first column)
+		trimData: true // trim the trailing zero rows
 	};
 
 	/**
@@ -74,11 +75,48 @@ var MatrixParser = (function()
 			}
 		}
 
+		if (options.trimData)
+		{
+			matrixData = trimData(matrixData);
+			rowHeaders = rowHeaders.slice(0, matrixData.length);
+		}
+
 		return {
 			data: matrixData,
 			columnHeaders: columnHeaders,
 			rowHeaders: rowHeaders
 		};
+	}
+
+	function trimData(data)
+	{
+		var lastZeroIdx = -1;
+		var lastNonZeroIdx = -1;
+		var trimmedData = data;
+
+		for (var i=0; i < data.length; i++)
+		{
+			var reduced = _.uniq(data[i]);
+
+			if (reduced.length === 1 && reduced[0] == 0)
+			{
+				if (lastZeroIdx <= lastNonZeroIdx)
+				{
+					lastZeroIdx = i;
+				}
+			}
+			else
+			{
+				lastNonZeroIdx = i;
+			}
+		}
+
+		if (lastZeroIdx > lastNonZeroIdx)
+		{
+			trimmedData = data.slice(0, lastZeroIdx);
+		}
+
+		return trimmedData;
 	}
 
 	/**

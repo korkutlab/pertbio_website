@@ -120,7 +120,14 @@
 
 		<!-- Tab Panes -->
 		<div class="tab-content">
-			<div role="tabpanel" class="tab-pane active" id="tab-home-page"></div>
+			<div role="tabpanel" class="tab-pane active" id="tab-home-page">
+				<div>
+					Some text here...
+				</div>
+				<div>
+					<img src="images/figure1_bpmel.png" class="img-responsive" alt="BP mel">
+				</div>
+			</div>
 			<div role="tabpanel" class="tab-pane" id="tab-data-matrix">
 				<img src="images/loading.gif" alt="Loading...">
 			</div>
