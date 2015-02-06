@@ -15,6 +15,12 @@ function HeatMap(options, matrix)
 		el: "#heatmap",         // id of the container
 		cellWidth: 8,           // width of a single data cell
 		cellHeight: 8,          // height of a single data cell
+		padding: { // svg padding values
+			left : 2,
+			right: 2,
+			top: 2,
+			bottom: 2
+		},
 		colorScaleRange: ["#0000FF", "#FDFDFD", "#FF0000"], // [min, mid, max] values for color scale range
 		//colorScaleRange: colorbrewer.RdBu[3].reverse(),
 		colorScaleDomain: [-1, 0, 1], // [min, mid, max] values for color scale domain
@@ -98,6 +104,7 @@ function HeatMap(options, matrix)
 				.attr("y", function(d) {
 					return parseFloat(d3.select(this).attr("y")) +
 					       _topPanelLabelLength +
+					       _options.padding.top +
 					       _options.topPanelPadding;
 				});
 		}
@@ -144,7 +151,7 @@ function HeatMap(options, matrix)
 		_leftPanelLabelLength = calculatePanelWidth(rowHeaderGroup, "heatmap-row-header");
 
 		rowHeaderGroup.selectAll(".heatmap-row-header")
-			.attr("x", _leftPanelLabelLength);
+			.attr("x", _leftPanelLabelLength + options.padding.left);
 
 		return rowHeaderGroup;
 	}
@@ -157,9 +164,15 @@ function HeatMap(options, matrix)
 		var x = function(d)
 		{
 			return colHeaderIndex[d] * options.cellWidth +
-			options.cellWidth +
-			options.leftPanelPadding +
-			_leftPanelLabelLength;
+				options.cellWidth +
+				options.leftPanelPadding +
+				options.padding.left +
+				_leftPanelLabelLength;
+		};
+
+		var y = function(d)
+		{
+			return _topPanelLabelLength + options.padding.top;
 		};
 
 		colHeaderGroup.selectAll(".heatmap-col-headers")
@@ -184,13 +197,13 @@ function HeatMap(options, matrix)
 		_topPanelLabelLength = calculatePanelWidth(colHeaderGroup, "heatmap-col-header");
 
 		colHeaderGroup.selectAll(".heatmap-col-header")
-			.attr("y", _topPanelLabelLength);
+			.attr("y", y());
 
 		// rotate column headers to vertical position
 		colHeaderGroup.selectAll(".heatmap-col-header")
 			.transition()
 			.attr("transform", function(d) {
-				return "rotate(-90, " + x(d) + "," + _topPanelLabelLength +")";
+				return "rotate(-90, " + x(d) + "," + y(d) + ")";
 			});
 
 		return colHeaderGroup;
@@ -220,11 +233,13 @@ function HeatMap(options, matrix)
 			.attr("x", function(d) {
 				return d.col * options.cellWidth +
 				       options.leftPanelPadding +
+				       options.padding.left +
 				       _leftPanelLabelLength;
 			})
 			.attr("y", function(d) {
 				return d.row * options.cellHeight +
 				       options.topPanelPadding +
+				       options.padding.top +
 				       _topPanelLabelLength;
 			})
 			.attr("width", options.cellWidth)
@@ -264,6 +279,8 @@ function HeatMap(options, matrix)
 			// length of a row is the number of columns + padding
 			width = options.cellWidth * data[0].length +
 			        options.leftPanelPadding +
+			        options.padding.left +
+			        options.padding.right +
 			        _leftPanelLabelLength;
 		}
 
@@ -279,6 +296,8 @@ function HeatMap(options, matrix)
 			// length of the matrix is the number of rows
 			height = options.cellHeight * data.length +
 			         options.topPanelPadding +
+			         options.padding.top +
+			         options.padding.bottom +
 			         _topPanelLabelLength;
 		}
 
