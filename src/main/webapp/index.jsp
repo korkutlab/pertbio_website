@@ -95,7 +95,17 @@
 
 	<script type="text/template" id="main_view_template">
 		<!-- Navigation Bar -->
-		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="navbar navbar-default peralyzer-navbar navbar-fixed-top" role="navigation">
+		<!--div class="navbar navbar-default peralyzer-navbar navbar-collapse collapse navbar-fixed-top" role="navigation">
+			<div class="navbar-header">
+				<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".peralyzer-navbar">
+					<span class="sr-only">...</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a href="#" class="navbar-brand">Peralyzer</a>
+			</div-->
 			<div>
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#tab-home-page" data-toggle="tab">Home</a></li>
@@ -119,7 +129,7 @@
 			<div role="tabpanel" class="tab-pane" id="tab-source-code"></div>
 			<div role="tabpanel" class="tab-pane" id="tab-about"></div>
 		</div>
-	</div>
+	</script>
 
 	<script type="text/template" id="loader_template">
 		<div class="network-loading">

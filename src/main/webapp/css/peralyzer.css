@@ -37,9 +37,18 @@
 	text-align: center;
 }
 
+.model-box {
+	width: 150px;
+}
+
+.peralyzer-navbar {
+	padding-left: 20px;
+}
+
 body {
-	min-height: 2000px;
+	min-height: 1080px;
 	padding-top: 70px;
+	padding-left: 20px;
 }
 
 /* LEGEND style */
