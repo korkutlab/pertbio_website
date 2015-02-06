@@ -19,7 +19,8 @@
 	<link href="css/jquery-ui.min.css" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-theme.min.css" rel="stylesheet">
 
     <!-- Flat UI -->
     <!--link href="css/flat-ui.css" rel="stylesheet"-->
@@ -82,12 +83,43 @@
 	<script src="js/src/util/ViewUtil.js"></script>
 	<script src="js/src/util/SvgUtil.js"></script>
 	<script src="js/src/model/DataModel.js"></script>
+	<script src="js/src/view/MainView.js"></script>
 	<script src="js/src/view/NotyView.js"></script>
 	<script src="js/src/view/HeatMapView.js"></script>
 	<script src="js/src/view/HeatMapTipView.js"></script>
 	<script src="js/src/view/NetworkView.js"></script>
 	<script src="js/src/view/ModelView.js"></script>
 	<script src="js/src/peralyzer.js"></script>
+
+	<!-- Backbone templates -->
+
+	<script type="text/template" id="main_view_template">
+		<!-- Navigation Bar -->
+		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#tab-home-page" data-toggle="tab">Home</a></li>
+					<li><a href="#tab-data-matrix" data-toggle="tab" class="link-data-matrix">Data Matrices</a></li>
+					<li><a href="#tab-model" data-toggle="tab" class="link-model">Models</a></li>
+					<li><a href="#tab-simulation" data-toggle="tab">Simulation</a></li>
+					<li><a href="#tab-source-code" data-toggle="tab">Source Code</a></li>
+					<li><a href="#tab-about" data-toggle="tab">About</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- Tab Panes -->
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="tab-home-page"></div>
+			<div role="tabpanel" class="tab-pane" id="tab-data-matrix">
+				<img src="images/loading.gif" alt="Loading...">
+			</div>
+			<div role="tabpanel" class="tab-pane" id="tab-model"></div>
+			<div role="tabpanel" class="tab-pane" id="tab-simulation"></div>
+			<div role="tabpanel" class="tab-pane" id="tab-source-code"></div>
+			<div role="tabpanel" class="tab-pane" id="tab-about"></div>
+		</div>
+	</div>
 
 	<script type="text/template" id="loader_template">
 		<div class="network-loading">
@@ -156,10 +188,7 @@
 		</div>
 	</script>
 
-	<div id="model_view"></div>
-	<!--div id="main_network_view"></div-->
-	<div id="heatmap1"></div>
-	<div id="heatmap2"></div>
+	<div id="main_container"></div>
 
   </body>
 </html>

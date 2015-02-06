@@ -37,6 +37,11 @@
 	text-align: center;
 }
 
+body {
+	min-height: 2000px;
+	padding-top: 70px;
+}
+
 /* LEGEND style */
 
 .legend-axis path {
