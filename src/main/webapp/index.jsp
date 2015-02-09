@@ -89,6 +89,7 @@
 	<script src="js/src/view/HeatMapTipView.js"></script>
 	<script src="js/src/view/NetworkView.js"></script>
 	<script src="js/src/view/ModelView.js"></script>
+	<script src="js/src/view/SimulationView.js"></script>
 	<script src="js/src/peralyzer.js"></script>
 
 	<!-- Backbone templates -->
@@ -111,7 +112,7 @@
 					<li class="active"><a href="#tab-home-page" data-toggle="tab">Home</a></li>
 					<li><a href="#tab-data-matrix" data-toggle="tab" class="link-data-matrix">Data Matrices</a></li>
 					<li><a href="#tab-model" data-toggle="tab" class="link-model">Models</a></li>
-					<li><a href="#tab-simulation" data-toggle="tab">Simulation</a></li>
+					<li><a href="#tab-simulation" data-toggle="tab" class="link-simulation">Simulation</a></li>
 					<li><a href="#tab-source-code" data-toggle="tab">Source Code</a></li>
 					<li><a href="#tab-about" data-toggle="tab">About</a></li>
 				</ul>
@@ -132,7 +133,9 @@
 				<img src="images/loading.gif" alt="Loading...">
 			</div>
 			<div role="tabpanel" class="tab-pane" id="tab-model"></div>
-			<div role="tabpanel" class="tab-pane" id="tab-simulation"></div>
+			<div role="tabpanel" class="tab-pane" id="tab-simulation">
+				<img src="images/loading.gif" alt="Loading...">
+			</div>
 			<div role="tabpanel" class="tab-pane" id="tab-source-code"></div>
 			<div role="tabpanel" class="tab-pane" id="tab-about"></div>
 		</div>
@@ -178,10 +181,10 @@
 			<table>
 				<tr>
 					<td>
-						<div class="model-select-title">Select a model to load...</div>
+						<div class="select-box-title model-select-title">Select a model to load...</div>
 						<div>
-							<select class="model-box span2" tabindex="1">
-								{{modelOptions}}
+							<select class="select-box model-box span2" tabindex="1">
+								{{selectOptions}}
 							</select>
 						</div>
 					</td>
@@ -189,6 +192,69 @@
 			</table>
 		</div>
 		<div class="heatmap-view"></div>
+	</script>
+
+	<script type="text/template" id="simulation_visualizer_template">
+		<div class="simulation-controls">
+			<table>
+				<tr>
+					<td>
+						<div class="select-box-title simulation-select-title">Select a simulation file</div>
+						<div>
+							<select class="select-box simulation-box span2" tabindex="1">
+								{{selectOptions}}
+							</select>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="simulation-view"></div>
+	</script>
+
+	<script type="text/template" id="simulation_view_template">
+		<div class="node-strength-selection">
+			<table class="node-strength-selection-table">
+				<tr>
+					<td>
+						<div class="select-box-title node-select-title">Node 1</div>
+						<div>
+							<select class="select-box row-node-box span2" tabindex="1">
+								{{rowNodeSelectOptions}}
+							</select>
+						</div>
+					</td>
+					<td>
+						<div class="select-box-title strength-select-title">Strength</div>
+						<div>
+							<select class="select-box row-strength-box span2" tabindex="1">
+								{{rowStrengthSelectOptions}}
+							</select>
+						</div>
+					</td>
+					<td>
+						<div class="select-box-title node-select-title">Node 2</div>
+						<div>
+							<select class="select-box col-node-box span2" tabindex="1">
+								{{colNodeSelectOptions}}
+							</select>
+						</div>
+					</td>
+					<td>
+						<div class="select-box-title strength-select-title">Strength</div>
+						<div>
+							<select class="select-box col-strength-box span2" tabindex="1">
+								{{colStrengthSelectOptions}}
+							</select>
+						</div>
+					</td>
+					<td>
+						<button class="btn btn-default simulate-button" type="button">Simulate</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="simulation-result"></div>
 	</script>
 
 	<script type="text/template" id="heatmap_view_template">

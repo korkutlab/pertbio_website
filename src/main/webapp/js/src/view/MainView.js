@@ -28,6 +28,11 @@ var MainView = Backbone.View.extend({
 			// initialize the tab on the first click
 			self.initModelTab();
 		});
+
+		self.$el.find(".link-simulation").one("click", function(evt) {
+			// initialize the tab on the first click
+			self.initSimulationTab();
+		});
 	},
 	initNetworkView: function()
 	{
@@ -51,6 +56,19 @@ var MainView = Backbone.View.extend({
 					"Error retrieving network data.");
 			}
 		});
+	},
+	initSimulationTab: function()
+	{
+		var self = this;
+
+		var modelView = new SimulationView({
+			el: self.$el.find("#tab-simulation"),
+			model: {
+				directory: "simulation"
+			}
+		});
+
+		modelView.render();
 	},
 	initModelTab: function()
 	{

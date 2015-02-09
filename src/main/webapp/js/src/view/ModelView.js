@@ -9,6 +9,12 @@ var ModelView = Backbone.View.extend({
 			{
 				var modelOptions = [];
 				var modelList = response.sort(function(a, b) {
+					var aParts = a.split("_");
+					var bParts = b.split("_");
+
+					a = parseInt(aParts[1]) || a;
+					b = parseInt(bParts[1]) || b;
+
 					if (a > b)
 					{
 						return 1;
@@ -24,7 +30,9 @@ var ModelView = Backbone.View.extend({
 					modelOptions.push(templateFn({selectId: name, selectName: name}));
 				});
 
-				var variables = {modelOptions: modelOptions.join("")};
+				var variables = {
+					selectOptions: modelOptions.join("")
+				};
 
 				// compile the template using underscore
 				var templateFn = _.template($("#model_visualizer_template").html());
@@ -39,8 +47,6 @@ var ModelView = Backbone.View.extend({
 	format: function()
 	{
 		var self = this;
-		// TODO format selection box (with chosen?)
-
 		var modelBox = self.$el.find(".model-box");
 
 		modelBox.change(function(evt) {
@@ -92,7 +98,8 @@ var ModelView = Backbone.View.extend({
 						var matrix = MatrixParser.parseInput({
 							input: response,
 							columnHeader: false,
-							rowHeader: false});
+							rowHeader: false
+						});
 
 						matrix.columnHeaders = indexMatrix.rowHeaders;
 						matrix.rowHeaders = indexMatrix.rowHeaders;

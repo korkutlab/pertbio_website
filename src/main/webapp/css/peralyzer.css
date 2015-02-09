@@ -29,7 +29,8 @@
 	text-align: center;
 }
 
-.heatmap-controls {
+.heatmap-controls,
+.simulation-controls {
 	margin-bottom: 10px;
 }
 
@@ -37,11 +38,16 @@
 	margin-bottom: 10px;
 }
 
-.model-select-title {
+.select-box-title {
 	text-align: center;
 }
 
-.model-box {
+.node-strength-selection-table td {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.select-box {
 	width: 150px;
 }
 
