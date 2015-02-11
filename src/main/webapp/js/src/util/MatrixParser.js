@@ -23,7 +23,8 @@ var MatrixParser = (function()
 	function parseInput(options)
 	{
 		// merge options with default options to use defaults for missing values
-		options = jQuery.extend(true, {}, _defaultOpts, options);
+		//options = jQuery.extend(true, {}, _defaultOpts, options);
+		options = _.extend({}, _defaultOpts, options);
 
 		var input = options.input;
 
