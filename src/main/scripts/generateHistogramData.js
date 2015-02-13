@@ -18,6 +18,7 @@ function main(args)
 {
 	var PREFIX = "predict";
 	var SUFFIX = ".txt";
+	var DEFAULT_BIN_COUNT = 100;
 
 	// map of <column name, column index> pairs (of select columns only)
 	// TODO use node_index.txt if possible
@@ -60,7 +61,7 @@ function main(args)
 		});
 	}
 
-	function processMatrix(matrix)
+	function processMatrix(matrix, binCount)
 	{
 		var dataSlice = {};
 		var histogramData = {};
@@ -80,14 +81,40 @@ function main(args)
 
 		// generate histogram data for each column
 		_.each(_.keys(dataSlice), function(key) {
-			var binData = 0;
+			// determine bin interval by using max and min values
+			var min = _.min(dataSlice[key]);
+			var max = _.max(dataSlice[key]);
+			var binInterval = (max - min) / binCount;
 
+			// init bin data object
+			var binData = {};
+			var minBinIdx = Math.floor(min/binInterval);
+			var maxBinIdx = Math.floor(max/binInterval);
+
+			for (var i = minBinIdx; i <= maxBinIdx; i++)
+			{
+				binData[i] = [];
+			}
+
+			// populate bins
 			_.each(dataSlice[key], function(value, idx) {
-				binData += value;
+				var binIdx = Math.floor(value / binInterval);
+
+				// exclude zero values
+				if (value !== 0)
+				{
+					binData[binIdx].push(value);
+				}
 			});
 
-			// TODO define bin interval and take count & average for all intervals!!
-			histogramData[key].push(binData / dataSlice[key].length);
+			// generate data to be stored
+			var histData = {};
+
+			_.each(binData, function(values) {
+				// TODO take count & average for all intervals
+			});
+
+			histogramData[key] = binData;
 		});
 
 		return histogramData;
@@ -96,6 +123,7 @@ function main(args)
 	// args[0]: node -- args[1]: generateHistogramData.js
 	var inputDir = args[2];
 	var outputDir = args[3];
+	var binCount = args[4] || DEFAULT_BIN_COUNT;
 
 	if (inputDir && outputDir)
 	{
@@ -113,7 +141,7 @@ function main(args)
 				{
 					var content = fs.readFileSync(filename).toString();
 					var matrix = MatrixParser.parseInput({input: content});
-					var histogramData = processMatrix(matrix);
+					var histogramData = processMatrix(matrix, binCount);
 
 					var sliceIdx = filename.lastIndexOf("/");
 					var outputName = outputDir + filename.slice(sliceIdx);
@@ -126,7 +154,7 @@ function main(args)
 	}
 	else
 	{
-		console.log("usage: node generateHistogramData.js <input_dir> <output_dir>");
+		console.log("usage: node generateHistogramData.js <input_dir> <output_dir> [<number_of_bins>]");
 	}
 }
 
