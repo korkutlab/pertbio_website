@@ -9,6 +9,17 @@ var MatrixData = Backbone.Model.extend({
     }
 });
 
+var HistogramData = Backbone.Model.extend({
+	initialize: function(attributes)
+	{
+		this.histogramData = attributes;
+	},
+	url: function()
+	{
+		return "data/histogram/" + this.get("name");
+    }
+});
+
 var NetworkData = Backbone.Model.extend({
 	initialize: function(attributes)
 	{

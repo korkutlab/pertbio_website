@@ -1,5 +1,6 @@
 package org.cbio.peralyzer.controller;
 
+import org.cbio.peralyzer.service.HistogramDataService;
 import org.cbio.peralyzer.service.MatrixDataService;
 import org.cbio.peralyzer.service.NetworkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class DataController
 
 	@Autowired
 	MatrixDataService matrixDataService;
+
+	@Autowired
+	HistogramDataService histogramDataService;
 
 	public NetworkService getNetworkService()
 	{
@@ -69,6 +73,24 @@ public class DataController
 		String response;
 		try {
 			response = matrixDataService.getMatrixData(name);
+		} catch (IOException e) {
+			return new ResponseEntity<String>(e.getMessage(), headers, HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<String>(response, headers, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "histogram/{name}",
+	                method = {RequestMethod.GET, RequestMethod.POST},
+	                headers = "Accept=application/text+plain")
+	public ResponseEntity<String> getHistogramData(@PathVariable String name)
+	{
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/text+plain; charset=utf-8");
+
+		String response;
+		try {
+			response = histogramDataService.getHistogramData(name);
 		} catch (IOException e) {
 			return new ResponseEntity<String>(e.getMessage(), headers, HttpStatus.BAD_REQUEST);
 		}

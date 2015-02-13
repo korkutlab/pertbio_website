@@ -254,7 +254,10 @@
 				</tr>
 			</table>
 		</div>
-		<div class="simulation-result"></div>
+		<div class="simulation-result">
+			<div class="simulation-average"></div>
+			<div class="simulation-histogram"></div>
+		</div>
 	</script>
 
 	<script type="text/template" id="heatmap_view_template">

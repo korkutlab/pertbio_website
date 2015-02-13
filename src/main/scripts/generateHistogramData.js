@@ -99,12 +99,7 @@ function main(args)
 			// populate bins
 			_.each(dataSlice[key], function(value, idx) {
 				var binIdx = Math.floor(value / binInterval);
-
-				// exclude zero values
-				if (value !== 0)
-				{
-					binData[binIdx].push(value);
-				}
+				binData[binIdx].push(value);
 			});
 
 			// generate data to be stored
@@ -122,7 +117,6 @@ function main(args)
 				var average = sum / count;
 
 				histData.binSummary.push({
-					sum: sum,
 					count: count,
 					average: average
 				});
@@ -147,7 +141,7 @@ function main(args)
 				throw err;
 			}
 
-			console.log("[" + Date() + "] processing directory: " + inputDir);
+			console.log("[" + new Date() + "] processing directory: " + inputDir);
 
 			_.each(results, function(filename, idx) {
 				if (filename.indexOf(PREFIX) != -1 &&
@@ -158,12 +152,12 @@ function main(args)
 					var histogramData = processMatrix(matrix, binCount);
 
 					var sliceIdx = filename.lastIndexOf("/");
-					var outputName = outputDir + filename.slice(sliceIdx);
+					var outputName = outputDir + filename.slice(sliceIdx).replace(SUFFIX, ".json");
 					fs.writeFileSync(outputName, JSON.stringify(histogramData));
 				}
 			});
 
-			console.log(Date() + " results written to: " + outputDir);
+			console.log(new Date() + " results written to: " + outputDir);
 		});
 	}
 	else

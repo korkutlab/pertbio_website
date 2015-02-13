@@ -41,7 +41,7 @@ var SimulationView = Backbone.View.extend({
 				$("#loader_template").html(), {}));
 
 			var name = simulationBox.val();
-			self.loadModel(target, name);
+			self.loadSimulation(target, name);
 		});
 
 		simulationBox.chosen({
@@ -51,12 +51,20 @@ var SimulationView = Backbone.View.extend({
 		// trigger change function to load initial data...
 		simulationBox.change();
 	},
-	loadModel: function(target, modelName)
+	loadSimulation: function(target, simName)
 	{
 		var self = this;
 		var baseDir = self.model.directory;
 
-		var matrixData = new MatrixData({name: baseDir + "|" + modelName});
+		// strength to numerical value mapping
+		var strengthMapping = {
+			"IC20": 1,
+			"IC40": 2,
+			"IC60": 3,
+			"IC80": 4
+		};
+
+		var matrixData = new MatrixData({name: baseDir + "|" + simName});
 
 		var extractOptions = function(headers)
 		{
@@ -83,6 +91,36 @@ var SimulationView = Backbone.View.extend({
 			};
 		};
 
+		var histogramFile = function(node1, node2, strength1, strength2)
+		{
+			return "predict_" +
+			       node1 + "_" +
+			       node2 + "_" +
+			       strengthMapping[strength1] + "_" +
+			       strengthMapping[strength2];
+		};
+
+		var drawHistogram = function(node1, node2, strength1, strength2, type)
+		{
+			//var chart = dc.barChart($(target).find(".simulation-histogram")[0]);
+			var chart = dc.barChart(".simulation-histogram");
+
+			var histogramData = new HistogramData({
+				name: histogramFile(node1, node2, strength1, strength2)});
+
+			histogramData.fetch({
+				success: function(collection, response, options)
+				{
+					// TODO draw the actual histogram (bar chart)
+				},
+				error: function(collection, response, options)
+				{
+					ViewUtil.displayErrorMessage(
+						"Error retrieving histogram data.");
+				}
+			});
+		};
+
 		// fetches matrix data from server
 		matrixData.fetch({
 			type: "POST",
@@ -95,6 +133,9 @@ var SimulationView = Backbone.View.extend({
 					columnHeader: true,
 					rowHeader: true
 				});
+
+				var colIdxMap = HeatMapDataUtil.getIndexMap(matrix.columnHeaders);
+				var rowIdxMap = HeatMapDataUtil.getIndexMap(matrix.rowHeaders);
 
 				var rowOpts = extractOptions(matrix.rowHeaders);
 				var colOpts = extractOptions(matrix.columnHeaders);
@@ -120,9 +161,16 @@ var SimulationView = Backbone.View.extend({
 					var node2 = $(target).find(".col-node-box").val();
 					var strength2 = $(target).find(".col-strength-box").val();
 
-					// TODO fetch the actual value from the data matrix & visualize...
-					$(target).find(".simulation-result").html(
-						node1 + "_" + strength1 + ":" + node2 + "_" + strength2);
+					var rowIdx = rowIdxMap[node1 + "_" + strength1];
+					var colIdx = colIdxMap[node2 + "_" + strength2];
+
+					// fetch the actual value from the data matrix & visualize...
+					$(target).find(".simulation-average").html("Average: " +
+						matrix.data[rowIdx][colIdx]);
+
+					var type = (simName.split("_"))[1];
+
+					drawHistogram(node1, node2, strength1, strength2, type);
 				});
 
 			},

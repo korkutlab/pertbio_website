@@ -73,7 +73,6 @@ public class MatrixDataService
 		String line;
 		StringBuilder buffer = new StringBuilder();
 
-		// assuming the file is not empty & first line is the header
 		while((line = in.readLine()) != null)
 		{
 			buffer.append(line);
