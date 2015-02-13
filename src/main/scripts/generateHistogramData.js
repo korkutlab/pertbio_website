@@ -108,13 +108,27 @@ function main(args)
 			});
 
 			// generate data to be stored
-			var histData = {};
+			// TODO also calculate mean, median, std deviation here?
+			var histData = {
+				binInterval: binInterval,
+				min: min,
+				max: max,
+				binSummary: []
+			};
 
 			_.each(binData, function(values) {
-				// TODO take count & average for all intervals
+				var sum = _.reduce(values, function(memo, num){ return memo + num; }, 0);
+				var count = values.length;
+				var average = sum / count;
+
+				histData.binSummary.push({
+					sum: sum,
+					count: count,
+					average: average
+				});
 			});
 
-			histogramData[key] = binData;
+			histogramData[key] = histData;
 		});
 
 		return histogramData;
