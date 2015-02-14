@@ -98,7 +98,7 @@ var SimulationView = Backbone.View.extend({
 			var strBuilder = ["predict"];
 
 			// ignore node2 selection if they are the same
-			if (node1 == node2)
+			if (node1 === node2)
 			{
 				strBuilder.push(node1);
 				strBuilder.push(strengthMapping[strength1]);
@@ -183,7 +183,12 @@ var SimulationView = Backbone.View.extend({
 					var rowIdx = rowIdxMap[node1 + "_" + strength1];
 					var colIdx = colIdxMap[node2 + "_" + strength2];
 
-					// fetch the actual value from the data matrix & visualize...
+					if (node1 === node2)
+					{
+						colIdx = rowIdx;
+					}
+
+					// fetch the actual value from the average data matrix & visualize...
 					$(target).find(".simulation-average").html("Average: " +
 						matrix.data[rowIdx][colIdx]);
 

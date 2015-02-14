@@ -16,7 +16,7 @@ function BarChart(options, histogramData)
 	var _defaultOpts = {
 		el: "#barchart", // id of the container
 		elHeight: 500,
-		elWidth: 960,
+		elWidth: 800,
 		padding: { // chart area padding values
 			left : 60,
 			right: 20,
@@ -88,7 +88,7 @@ function BarChart(options, histogramData)
 			.tickFormat(function(d) {
 				if (_.contains(_visibleTicks, d))
 				{
-					return d.toFixed(5);
+					return d.toFixed(3);
 				}
 				else
 				{
