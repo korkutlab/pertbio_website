@@ -66,6 +66,7 @@ var SimulationView = Backbone.View.extend({
 
 		var matrixData = new MatrixData({name: baseDir + "|" + simName});
 
+		// extracts select options for the given headers
 		var extractOptions = function(headers)
 		{
 			var nodeSelectOptions = [];
@@ -91,6 +92,7 @@ var SimulationView = Backbone.View.extend({
 			};
 		};
 
+		// generates the name of the target histogram data file
 		var histogramFile = function(node1, node2, strength1, strength2)
 		{
 			return "predict_" +
@@ -100,18 +102,23 @@ var SimulationView = Backbone.View.extend({
 			       strengthMapping[strength2];
 		};
 
+		// draws the actual histogram (bar chart)
 		var drawHistogram = function(node1, node2, strength1, strength2, type)
 		{
-			//var chart = dc.barChart($(target).find(".simulation-histogram")[0]);
-			var chart = dc.barChart(".simulation-histogram");
-
 			var histogramData = new HistogramData({
 				name: histogramFile(node1, node2, strength1, strength2)});
 
 			histogramData.fetch({
 				success: function(collection, response, options)
 				{
-					// TODO draw the actual histogram (bar chart)
+					// remove previous content
+					target.find(".simulation-histogram").empty();
+
+					// draw the actual histogram (bar chart)
+					var barChart = new BarChart({el: target.find(".simulation-histogram")},
+						response[type].binSummary);
+
+					barChart.init();
 				},
 				error: function(collection, response, options)
 				{
@@ -168,7 +175,7 @@ var SimulationView = Backbone.View.extend({
 					$(target).find(".simulation-average").html("Average: " +
 						matrix.data[rowIdx][colIdx]);
 
-					var type = (simName.split("_"))[1];
+					var type = (simName.split("_"))[1]; // g1arrest, sarrest, etc.
 
 					drawHistogram(node1, node2, strength1, strength2, type);
 				});

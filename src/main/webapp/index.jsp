@@ -70,6 +70,7 @@
 	<script src="js/lib/jquery.scrollTo-1.4.3.1-min.js"></script>
 	<script src="js/lib/js_cols.min.js"></script>
 	<script src="js/lib/d3.min.js"></script>
+	<script src="js/lib/d3.tip.js"></script>
 	<script src="js/lib/colorbrewer.js"></script>
 
 	<!--[if lt IE 8]>
@@ -77,6 +78,7 @@
 	<![endif]-->
 
 	<script src="js/src/component/HeatMap.js"></script>
+	<script src="js/src/component/BarChart.js"></script>
 	<script src="js/src/component/GradientLegend.js"></script>
 	<script src="js/src/util/HeatMapDataUtil.js"></script>
 	<script src="js/src/util/MatrixParser.js"></script>

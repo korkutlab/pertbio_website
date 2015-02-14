@@ -28,7 +28,7 @@ function main(args)
 		g1arrest: 85,
 		g2arrest: 86,
 		sarrest: 87,
-		cell_viability:	88
+		cellviability: 88
 	};
 
 	/**
@@ -116,10 +116,27 @@ function main(args)
 				var count = values.length;
 				var average = sum / count;
 
-				histData.binSummary.push({
-					count: count,
-					average: average
-				});
+				if (average)
+				{
+					histData.binSummary.push({
+						count: count,
+						average: average
+					});
+				}
+			});
+
+			// sort bins wrt average
+			histData.binSummary.sort(function(a, b) {
+				if (a.average < b.average)
+				{
+					return -1;
+				}
+				else if (a.average > b.average)
+				{
+					return 1;
+				}
+
+				return 0;
 			});
 
 			histogramData[key] = histData;
