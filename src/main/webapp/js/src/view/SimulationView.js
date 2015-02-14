@@ -95,11 +95,23 @@ var SimulationView = Backbone.View.extend({
 		// generates the name of the target histogram data file
 		var histogramFile = function(node1, node2, strength1, strength2)
 		{
-			return "predict_" +
-			       node1 + "_" +
-			       node2 + "_" +
-			       strengthMapping[strength1] + "_" +
-			       strengthMapping[strength2];
+			var strBuilder = ["predict"];
+
+			// ignore node2 selection if they are the same
+			if (node1 == node2)
+			{
+				strBuilder.push(node1);
+				strBuilder.push(strengthMapping[strength1]);
+			}
+			else
+			{
+				strBuilder.push(node1);
+				strBuilder.push(node2);
+				strBuilder.push(strengthMapping[strength1]);
+				strBuilder.push(strengthMapping[strength2]);
+			}
+
+			return strBuilder.join("_");
 		};
 
 		// draws the actual histogram (bar chart)
