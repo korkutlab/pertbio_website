@@ -43,12 +43,16 @@
 }
 
 .node-strength-selection-table td {
-	padding-left: 10px;
 	padding-right: 10px;
 }
 
 .select-box {
 	width: 150px;
+}
+
+.row-strength-box,
+.col-strength-box {
+	width: 80px;
 }
 
 .peralyzer-navbar {
@@ -85,14 +89,6 @@ body {
 	fill: none;
 	stroke: #000;
 	shape-rendering: crispEdges;
-}
-
-.simulation-histogram .bar {
-	fill: orange;
-}
-
-.simulation-histogram .bar:hover {
-	fill: orangered ;
 }
 
 .simulation-histogram x.axis path {

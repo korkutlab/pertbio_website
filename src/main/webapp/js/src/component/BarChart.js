@@ -18,15 +18,19 @@ function BarChart(options, histogramData)
 		elHeight: 500,
 		elWidth: 800,
 		padding: { // chart area padding values
-			left : 60,
+			left : 80,
 			right: 20,
 			top: 40,
-			bottom: 30
+			bottom: 40
 		},
-		yAxisLabel: "Y Axis",
-		yAxisLabelAnchor: "end",
+		barFillColor: "#FF6600",
+		barHoverColor: "#FF4500",
+		yAxisLabel: "Frequency",
+		yAxisLabelAnchor: "middle",
+		yAxisLabelPadding: 20,
 		xAxisLabel: "X Axis",
 		xAxisLabelAnchor: "middle",
+		xAxisLabelPadding: 5,
 		xAxisTickInterval: 10,
 		dataTooltipFn: function(d)
 		{
@@ -123,17 +127,21 @@ function BarChart(options, histogramData)
 			.attr("class", "x axis")
 			.attr("transform", "translate(0," + height + ")")
 			.call(xAxis)
-//			.append("text")
-//			.style("text-anchor", _options.xAxisLabelAnchor)
-//			.text(_options.xAxisLabel);
+			.append("text")
+			.attr("y", _options.padding.bottom - _options.xAxisLabelPadding)
+			.attr("x", width / 2)
+			//.attr("dy", ".71em")
+			.style("text-anchor", _options.xAxisLabelAnchor)
+			.text(_options.xAxisLabel);
 
 		svg.append("g")
 			.attr("class", "y axis")
 			.call(yAxis)
 			.append("text")
 			.attr("transform", "rotate(-90)")
-			.attr("y", 6)
-			.attr("dy", ".71em")
+			.attr("y", _options.yAxisLabelPadding - _options.padding.left)
+			//.attr("dy", ".71em")
+			.attr("x", -(height / 2))
 			.style("text-anchor", _options.yAxisLabelAnchor)
 			.text(_options.yAxisLabel);
 
@@ -145,8 +153,17 @@ function BarChart(options, histogramData)
 			.attr("width", x.rangeBand())
 			.attr("y", function(d) { return y(d.count); })
 			.attr("height", function(d) { return height - y(d.count); })
+			.attr("fill", _options.barFillColor)
 			.on('mouseover', tip.show)
 			.on('mouseout', tip.hide);
+
+		// add hover effect to the histogram bars
+		$(_options.el).find(".bar").hover(function() {
+			$(this).css({fill: _options.barHoverColor});
+		},
+		function() {
+			$(this).css({fill: _options.barFillColor});
+		});
 	}
 
 	this.init = init;
