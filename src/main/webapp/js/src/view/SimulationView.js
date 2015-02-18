@@ -128,24 +128,30 @@ var SimulationView = Backbone.View.extend({
 			var histogramData = new HistogramData({
 				name: histogramFile(node1, node2, strength1, strength2)});
 
+			var histogramEl = target.find(".simulation-histogram");
+
 			histogramData.fetch({
 				success: function(collection, response, options)
 				{
 					// remove previous content
-					target.find(".simulation-histogram").empty();
+					histogramEl.empty();
 
 					// draw the actual histogram (bar chart)
-					var barChart = new BarChart({el: target.find(".simulation-histogram")},
+					var barChart = new BarChart({el: histogramEl},
 						response[type].binSummary);
 
 					barChart.init();
 				},
 				error: function(collection, response, options)
 				{
+					histogramEl.empty();
+
 					ViewUtil.displayErrorMessage(
 						"Error retrieving histogram data.");
 				}
 			});
+
+			histogramEl.html(_.template($("#loader_template").html(), {}));
 		};
 
 		// fetches matrix data from server
@@ -192,7 +198,9 @@ var SimulationView = Backbone.View.extend({
 					search_contains: true
 				});
 
-				$(target).find(".simulate-button").click(function(evt) {
+				var submitButton = $(target).find(".simulate-button");
+
+				submitButton.click(function(evt) {
 					var node1 = $(target).find(".row-node-box").val();
 					var strength1 = $(target).find(".row-strength-box").val();
 					var node2 = $(target).find(".col-node-box").val();
@@ -215,6 +223,8 @@ var SimulationView = Backbone.View.extend({
 					drawHistogram(node1, node2, strength1, strength2, type);
 				});
 
+				// draw the histogram initially
+				submitButton.click();
 			},
 			error: function(collection, response, options)
 			{
