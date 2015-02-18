@@ -164,7 +164,7 @@
 	<script type="text/template" id="prot_heatmap_tip_template">
 		<table class='prot-heatmap-tip-table'>
 			<tr>
-				<td class='text-align-center'>{{datum.rowHeader}} &rarr; {{datum.colHeader}}</td>
+				<td class='text-align-center'>{{datum.colHeader}} &rarr; {{datum.rowHeader}}</td>
 			</tr>
 			<tr>
 				<td class='text-align-center'>
