@@ -35,13 +35,21 @@ var SimulationView = Backbone.View.extend({
 		simulationBox.change(function(evt) {
 			var target = self.$el.find(".simulation-view");
 
+			// preserve prev selection if possible
+			var prevSelection = {
+				node1: $(target).find(".row-node-box").val(),
+				strength1: $(target).find(".row-strength-box").val(),
+				node2: $(target).find(".col-node-box").val(),
+				strength2: $(target).find(".col-strength-box").val()
+			};
+
 			// display loader message before actually loading the data
 			// it will be replaced once data is fetched
 			$(target).html(_.template(
 				$("#loader_template").html(), {}));
 
 			var name = simulationBox.val();
-			self.loadSimulation(target, name);
+			self.loadSimulation(target, name, prevSelection);
 		});
 
 		simulationBox.chosen({
@@ -51,7 +59,7 @@ var SimulationView = Backbone.View.extend({
 		// trigger change function to load initial data...
 		simulationBox.change();
 	},
-	loadSimulation: function(target, simName)
+	loadSimulation: function(target, simName, prevSelection)
 	{
 		var self = this;
 		var baseDir = self.model.directory;
@@ -169,6 +177,16 @@ var SimulationView = Backbone.View.extend({
 				var templateFn = _.template($("#simulation_view_template").html());
 
 				$(target).html(templateFn(variables));
+
+				// if all values are the same (empty or null),
+				// then assuming there is no prev selection yet...
+				if (_.uniq(_.values(prevSelection)).length > 1)
+				{
+					$(target).find(".row-node-box").val(prevSelection.node1);
+					$(target).find(".row-strength-box").val(prevSelection.strength1);
+					$(target).find(".col-node-box").val(prevSelection.node2);
+					$(target).find(".col-strength-box").val(prevSelection.strength2);
+				}
 
 				$(target).find(".select-box").chosen({
 					search_contains: true
