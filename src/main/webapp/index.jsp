@@ -201,7 +201,7 @@
 			<table>
 				<tr>
 					<td>
-						<div class="select-box-title simulation-select-title">Select a simulation file</div>
+						<div class="select-box-title simulation-select-title">Phenotype</div>
 						<div>
 							<select class="select-box simulation-box span2" tabindex="1">
 								{{selectOptions}}
@@ -219,7 +219,7 @@
 			<table class="node-strength-selection-table">
 				<tr>
 					<td>
-						<div class="select-box-title node-select-title">Node 1</div>
+						<div class="select-box-title node-select-title">Perturbation 1</div>
 						<div>
 							<select class="select-box row-node-box span2" tabindex="1">
 								{{rowNodeSelectOptions}}
@@ -235,7 +235,7 @@
 						</div>
 					</td>
 					<td>
-						<div class="select-box-title node-select-title">Node 2</div>
+						<div class="select-box-title node-select-title">Perturbation 2</div>
 						<div>
 							<select class="select-box col-node-box span2" tabindex="1">
 								{{colNodeSelectOptions}}
@@ -257,7 +257,7 @@
 			</table>
 		</div>
 		<div class="simulation-result">
-			<div class="simulation-average"></div>
+			<div class="simulation-summary"></div>
 			<div class="simulation-histogram"></div>
 		</div>
 	</script>

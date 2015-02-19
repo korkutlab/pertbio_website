@@ -4,6 +4,14 @@ var SimulationView = Backbone.View.extend({
 		var self = this;
 		var names = new MatrixList({directory: self.model.directory});
 
+		self.phenotypeMapping = {
+			"cellviability": "cell viability",
+			"g1arrest": "g1 arrest",
+			"g2arrest": "g2 arrest",
+			"g2m": "g2m",
+			"sarrest": "s arrest"
+		};
+
 		names.fetch({
 			success: function(collection, response, options)
 			{
@@ -12,7 +20,8 @@ var SimulationView = Backbone.View.extend({
 
 				_.each(simulationList, function(name) {
 					var templateFn = _.template($("#select_item_template").html());
-					simulationOptions.push(templateFn({selectId: name, selectName: name}));
+					simulationOptions.push(templateFn(
+						{selectId: name, selectName: self.phenotypeMapping[name]}));
 				});
 
 				var variables = {selectOptions: simulationOptions.join("")};
@@ -137,7 +146,9 @@ var SimulationView = Backbone.View.extend({
 					histogramEl.empty();
 
 					// draw the actual histogram (bar chart)
-					var barChart = new BarChart({el: histogramEl},
+					var barChart = new BarChart({el: histogramEl,
+							yAxisLabel: "# of Models",
+							xAxisLabel: "Predicted Response: log(perturbed / non-perturbed)"},
 						response[type].binSummary);
 
 					barChart.init();
@@ -215,10 +226,10 @@ var SimulationView = Backbone.View.extend({
 					}
 
 					// fetch the actual value from the average data matrix & visualize...
-					$(target).find(".simulation-average").html("Average: " +
+					$(target).find(".simulation-summary").html("Average: " +
 						matrix.data[rowIdx][colIdx]);
 
-					var type = (simName.split("_"))[1]; // g1arrest, sarrest, etc.
+					var type = simName; // g1arrest, sarrest, etc.
 
 					drawHistogram(node1, node2, strength1, strength2, type);
 				});

@@ -59,6 +59,12 @@
 	padding-left: 20px;
 }
 
+.simulation-summary {
+	margin-left: 80px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
 body {
 	min-height: 1080px;
 	padding-top: 70px;

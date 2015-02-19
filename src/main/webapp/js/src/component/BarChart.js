@@ -20,12 +20,12 @@ function BarChart(options, histogramData)
 		padding: { // chart area padding values
 			left : 80,
 			right: 20,
-			top: 40,
+			top: 0,
 			bottom: 40
 		},
 		barFillColor: "#FF6600",
 		barHoverColor: "#FF4500",
-		yAxisLabel: "Frequency",
+		yAxisLabel: "Y Axis",
 		yAxisLabelAnchor: "middle",
 		yAxisLabelPadding: 20,
 		xAxisLabel: "X Axis",
