@@ -61,15 +61,13 @@ function main(args)
 		});
 	}
 
-	function processMatrix(matrix, binCount)
+	function columnsOfInterest(matrix)
 	{
 		var dataSlice = {};
-		var histogramData = {};
 
-		// init arrays for data slice
+		// init array for data slice
 		_.each(_.keys(indexMap), function(key) {
 			dataSlice[key] = [];
-			histogramData[key] = [];
 		});
 
 		// extract columns of interest
@@ -79,11 +77,126 @@ function main(args)
 			});
 		});
 
+		return dataSlice;
+	}
+
+	function calcGlobalMaxMin(inputDir)
+	{
+		var globalMaxMin = {};
+
+		// init the array
+		_.each(_.keys(indexMap), function(key) {
+			globalMaxMin[key] = {min: 0, max: 0};
+		});
+
+		walk(inputDir, function(err, results) {
+			if (err)
+			{
+				throw err;
+			}
+
+			console.log("[" + new Date() + "] calculating global min and max for the directory: " + inputDir);
+
+			_.each(results, function(filename, idx) {
+				if (filename.indexOf(PREFIX) != -1 &&
+				    filename.indexOf(SUFFIX) != -1)
+				{
+					var content = fs.readFileSync(filename).toString();
+					var matrix = MatrixParser.parseInput({input: content});
+					var maxMin = calcMaxMin(matrix);
+
+					// update global max and min if necessary
+					_.each(_.keys(indexMap), function(key) {
+						if (globalMaxMin[key].min > maxMin[key].min)
+						{
+							globalMaxMin[key].min = maxMin[key].min;
+						}
+
+						if (globalMaxMin[key].max < maxMin[key].max)
+						{
+							globalMaxMin[key].max = maxMin[key].max;
+						}
+					});
+				}
+			});
+
+			console.log("[" + new Date() + "] finished calculating global min and max values.");
+		});
+
+		return globalMaxMin;
+	}
+
+	function generateData(inputDir, outputDir, maxMin, binCount)
+	{
+		walk(inputDir, function(err, results) {
+			if (err)
+			{
+				throw err;
+			}
+
+			console.log("[" + new Date() + "] processing directory: " + inputDir);
+
+			_.each(results, function(filename, idx) {
+				if (filename.indexOf(PREFIX) != -1 &&
+				    filename.indexOf(SUFFIX) != -1)
+				{
+					var content = fs.readFileSync(filename).toString();
+					var matrix = MatrixParser.parseInput({input: content});
+					var histogramData = processMatrix(matrix, maxMin, binCount);
+
+					var sliceIdx = filename.lastIndexOf("/");
+					var outputName = outputDir + filename.slice(sliceIdx).replace(SUFFIX, ".json");
+					fs.writeFileSync(outputName, JSON.stringify(histogramData));
+				}
+			});
+
+			console.log(new Date() + " results written to: " + outputDir);
+		});
+	}
+
+	function calcMaxMin(matrix)
+	{
+		// extract columns of interest
+		var dataSlice = columnsOfInterest(matrix);
+
+		var maxMin = {};
+
+		// init the array
+		_.each(_.keys(indexMap), function(key) {
+			maxMin[key] = {};
+		});
+
 		// generate histogram data for each column
 		_.each(_.keys(dataSlice), function(key) {
 			// determine bin interval by using max and min values
-			var min = _.min(dataSlice[key]);
-			var max = _.max(dataSlice[key]);
+			maxMin[key].min = _.min(dataSlice[key]);
+			maxMin[key].max = _.max(dataSlice[key]);
+		});
+
+		return maxMin;
+	}
+
+	function processMatrix(matrix, maxMin, binCount)
+	{
+		// extract columns of interest
+		var dataSlice = columnsOfInterest(matrix);
+
+		var histogramData = {};
+
+		// init histogram data array
+		_.each(_.keys(indexMap), function(key) {
+			histogramData[key] = [];
+		});
+
+		// generate histogram data for each column
+		_.each(_.keys(dataSlice), function(key) {
+			// determine bin interval by using max and min values
+			//var min = _.min(dataSlice[key]);
+			//var max = _.max(dataSlice[key]);
+
+			// determine bin interval by using global max and min values
+			var min = maxMin[key].min;
+			var max = maxMin[key].max;
 			var binInterval = (max - min) / binCount;
 
 			// init bin data object
@@ -111,18 +224,20 @@ function main(args)
 				binSummary: []
 			};
 
-			_.each(binData, function(values) {
+			_.each(binData, function(values, binIdx) {
 				var sum = _.reduce(values, function(memo, num){ return memo + num; }, 0);
 				var count = values.length;
 				var average = sum / count;
 
-				if (average)
-				{
-					histData.binSummary.push({
-						count: count,
-						average: average
-					});
-				}
+				// if no average (i.e. empty bin),
+				// then take the mid point of the current interval
+				average = average ||
+				          (min + ((parseInt(binIdx) - minBinIdx) + 0.5) * binInterval);
+
+				histData.binSummary.push({
+					count: count,
+					average: average
+				});
 			});
 
 			// sort bins wrt average
@@ -152,30 +267,8 @@ function main(args)
 
 	if (inputDir && outputDir)
 	{
-		walk(inputDir, function(err, results) {
-			if (err)
-			{
-				throw err;
-			}
-
-			console.log("[" + new Date() + "] processing directory: " + inputDir);
-
-			_.each(results, function(filename, idx) {
-				if (filename.indexOf(PREFIX) != -1 &&
-				    filename.indexOf(SUFFIX) != -1)
-				{
-					var content = fs.readFileSync(filename).toString();
-					var matrix = MatrixParser.parseInput({input: content});
-					var histogramData = processMatrix(matrix, binCount);
-
-					var sliceIdx = filename.lastIndexOf("/");
-					var outputName = outputDir + filename.slice(sliceIdx).replace(SUFFIX, ".json");
-					fs.writeFileSync(outputName, JSON.stringify(histogramData));
-				}
-			});
-
-			console.log(new Date() + " results written to: " + outputDir);
-		});
+		var globalMaxMin = calcGlobalMaxMin(inputDir);
+		generateData(inputDir, outputDir, globalMaxMin, binCount);
 	}
 	else
 	{
