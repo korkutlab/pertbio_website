@@ -87,7 +87,7 @@ var MainView = Backbone.View.extend({
 	initDataMatrixTab: function()
 	{
 		var self = this;
-		var matrixData = new MatrixData({name: "skmel133_proteomic_clustered_data"});
+		var matrixData = new MatrixData({name: "mel133_pert_proteomic_data_clustered"});
 
 		// fetches matrix data from server
 		matrixData.fetch({
