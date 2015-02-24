@@ -60,7 +60,6 @@ var SimulationView = Backbone.View.extend({
 			}
 		};
 		node1LineBox.bootstrapSwitch(switchOpts);
-		switchOpts.onColor = "success"; // color the second switch with green
 		node2LineBox.bootstrapSwitch(switchOpts);
 
 		simulationBox.change(function(evt) {

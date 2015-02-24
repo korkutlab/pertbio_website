@@ -200,13 +200,15 @@
 					<td>
 						<div class="select-box-title">Perturbation 1 Line</div>
 						<div class="line-checkbox">
-							<input type="checkbox" name="node1-line-chart" class="node1-line-checkbox">
+							<input type="checkbox" name="node1-line-chart" class="node1-line-checkbox"
+							       data-on-color="primary">
 						</div>
 					</td>
 					<td>
 						<div class="select-box-title">Perturbation 2 Line</div>
 						<div class="line-checkbox">
-							<input type="checkbox" name="node2-line-chart" class="node2-line-checkbox">
+							<input type="checkbox" name="node2-line-chart" class="node2-line-checkbox"
+							       data-on-color="success">
 						</div>
 					</td>
 				</tr>
