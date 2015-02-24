@@ -21,6 +21,7 @@
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="css/bootstrap-switch.css" rel="stylesheet">
 
     <!-- Flat UI -->
     <!--link href="css/flat-ui.css" rel="stylesheet"-->
@@ -47,28 +48,16 @@
 	<!-- JS libraries -->
 	<script src="js/lib/jquery-2.1.3.min.js"></script>
 	<script src="js/lib/jquery-ui.min.js"></script>
-	<script src="js/lib/jquery.dropkick-1.0.0.js"></script>
-	<script src="js/lib/custom_checkbox_and_radio.js"></script>
-	<script src="js/lib/custom_checkbox_and_radio.js"></script>
-	<script src="js/lib/custom_radio.js"></script>
-	<script src="js/lib/jquery.tagsinput.js"></script>
-	<script src="js/lib/jquery.ui.touch-punch.min.js"></script>
-	<script src="js/lib/bootstrap.min.js"></script>
-	<script src="js/lib/jquery.placeholder.js"></script>
-	<script src="js/lib/arbor.js"></script>
-	<script src="js/lib/cytoscape.min.js"></script>
-	<script src="js/lib/jquery.cytoscape-panzoom.min.js"></script>
-	<script src="js/lib/underscore-min.js"></script>
-	<script src="js/lib/backbone-min.js"></script>
-	<script src="js/lib/jquery.fancybox-1.3.4.pack.js"></script>
-	<script src="js/lib/jquery.easing-1.3.pack.js"></script>
-	<script src="js/lib/jquery.expander.min.js"></script>
 	<script src="js/lib/jquery.noty.packaged.min.js"></script>
 	<script src="js/lib/jquery.qtip.min.js"></script>
+	<script src="js/lib/bootstrap.min.js"></script>
+	<script src="js/lib/bootstrap-switch.min.js"></script>
+	<script src="js/lib/cytoscape.min.js"></script>
+	<script src="js/lib/underscore-min.js"></script>
+	<script src="js/lib/backbone-min.js"></script>
+	<!--script src="js/lib/jquery.expander.min.js"></script-->
+	<!--script src="js/lib/arbor.js"></script-->
 	<script src="js/lib/chosen.jquery.min.js"></script>
-	<script src="js/lib/store.js"></script>
-	<script src="js/lib/jquery.scrollTo-1.4.3.1-min.js"></script>
-	<script src="js/lib/js_cols.min.js"></script>
 	<script src="js/lib/d3.min.js"></script>
 	<script src="js/lib/d3.tip.js"></script>
 	<script src="js/lib/colorbrewer.js"></script>
@@ -198,7 +187,7 @@
 
 	<script type="text/template" id="simulation_visualizer_template">
 		<div class="simulation-controls">
-			<table>
+			<table class="simulation-controls-table">
 				<tr>
 					<td>
 						<div class="select-box-title simulation-select-title">Phenotype</div>
@@ -206,6 +195,18 @@
 							<select class="select-box simulation-box span2" tabindex="1">
 								{{selectOptions}}
 							</select>
+						</div>
+					</td>
+					<td>
+						<div class="select-box-title">Perturbation 1 Line</div>
+						<div class="line-checkbox">
+							<input type="checkbox" name="node1-line-chart" class="node1-line-checkbox">
+						</div>
+					</td>
+					<td>
+						<div class="select-box-title">Perturbation 2 Line</div>
+						<div class="line-checkbox">
+							<input type="checkbox" name="node2-line-chart" class="node2-line-checkbox">
 						</div>
 					</td>
 				</tr>

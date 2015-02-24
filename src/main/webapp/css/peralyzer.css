@@ -42,8 +42,13 @@
 	text-align: center;
 }
 
-.node-strength-selection-table td {
+.node-strength-selection-table td,
+.simulation-controls-table td {
 	padding-right: 10px;
+}
+
+.line-checkbox {
+	text-align: center;
 }
 
 .select-box {

@@ -20,11 +20,14 @@ function BarChart(options, histogramData)
 		padding: { // chart area padding values
 			left : 80,
 			right: 20,
-			top: 0,
+			top: 10,
 			bottom: 40
 		},
-		barFillColor: "#FF6600",
+		barFillColor: "#FFAA00",
 		barHoverColor: "#FF4500",
+		drawLine: [false, false], // indicates whether to draw line charts
+		lineStrokeColor: ["#0000FF", "#00FF00"],
+		lineStrokeWidth: 1.5,
 		yAxisLabel: "Y Axis",
 		yAxisLabelAnchor: "middle",
 		yAxisLabelPadding: 20,
@@ -43,6 +46,7 @@ function BarChart(options, histogramData)
 
 	var _svg = null;
 	var _visibleTicks = null;
+	var _combinedData = [];
 
 	// merge options with default options to use defaults for missing values
 	var _options = jQuery.extend(true, {}, _defaultOpts, options);
@@ -52,9 +56,19 @@ function BarChart(options, histogramData)
 		// selecting using jQuery node to support both string and jQuery selector values
 		var node = $(_options.el)[0];
 		var container = d3.select(node);
-		_visibleTicks = visibleTicks(histogramData);
+		_visibleTicks = visibleTicks(histogramData.barChartData);
+		_combinedData = _combinedData.concat(histogramData.barChartData);
 
-		drawBarChart(container);
+		_.each(histogramData.lineChartData, function(data, idx) {
+			if(_options.drawLine[idx] === true)
+			{
+				_combinedData = _combinedData.concat(data);
+			}
+		});
+
+		_svg = initSvg(container);
+		drawBarChart(_svg);
+		drawLineCharts(_svg);
 	}
 
 	function visibleTicks(data)
@@ -72,11 +86,76 @@ function BarChart(options, histogramData)
 		return ticks;
 	}
 
-	function drawBarChart(container)
+	function initSvg(container)
 	{
 		var margin = _options.padding;
-		var	width = _options.elWidth - margin.left - margin.right;
-		var	height = _options.elHeight - margin.top - margin.bottom;
+		var	width = getWidth();
+		var	height = getHeight();
+
+		// init svg
+		var svg = container.append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		return svg;
+	}
+
+	function getWidth()
+	{
+		return _options.elWidth - _options.padding.left - _options.padding.right;
+	}
+
+	function getHeight()
+	{
+		return _options.elHeight - _options.padding.top - _options.padding.bottom;
+	}
+
+	function drawLineCharts(svg)
+	{
+		var	width = getWidth();
+		var	height = getHeight();
+
+		_.each(histogramData.lineChartData, function(data, idx) {
+			if(_options.drawLine[idx] !== true)
+			{
+				return;
+			}
+
+			// generate scale functions
+			var x = d3.scale.ordinal()
+				.rangeRoundBands([0, width], .1);
+
+			var y = d3.scale.linear()
+				.range([height, 0]);
+
+			x.domain(data.map(function(d) { return d.average; }));
+			//y.domain([0, d3.max(data, function(d) { return d.count; })]);
+			y.domain([0, d3.max(_combinedData, function(d) { return d.count; })]);
+
+			// generate line function
+			var line = d3.svg.line()
+				.x(function(d) { return x(d.average); })
+				.y(function(d) { return y(d.count); })
+				.interpolate("monotone");
+
+			// append the line (path)
+			svg.append("g")
+				.append("path")
+				.datum(data)
+				.attr("d", line)
+				.attr("class", "chart-line")
+				.attr("stroke", _options.lineStrokeColor[idx])
+				.attr("stroke-width", _options.lineStrokeWidth)
+				.attr("fill", "none");
+		})
+	}
+
+	function drawBarChart(svg)
+	{
+		var	width = getWidth();
+		var	height = getHeight();
 
 		//var formatPercent = d3.format(".0%");
 
@@ -105,23 +184,20 @@ function BarChart(options, histogramData)
 			.orient("left");
 			//.tickFormat(formatPercent);
 
+		// init tooltip
 		var tip = d3.tip()
 			.attr('class', 'd3-tip')
 			.offset([-10, 0])
 			.html(_options.dataTooltipFn);
 
-		var svg = container.append("svg")
-			.attr("width", width + margin.left + margin.right)
-			.attr("height", height + margin.top + margin.bottom)
-			.append("g")
-			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
 		svg.call(tip);
 
-		var data = histogramData;
+		var data = histogramData.barChartData;
 
 		x.domain(data.map(function(d) { return d.average; }));
-		y.domain([0, d3.max(data, function(d) { return d.count; })]);
+		//y.domain([0, d3.max(data, function(d) { return d.count; })]);
+		y.domain([0, d3.max(_combinedData, function(d) { return d.count; })]);
+
 
 		svg.append("g")
 			.attr("class", "x axis")
@@ -166,5 +242,11 @@ function BarChart(options, histogramData)
 		});
 	}
 
+	function getData()
+	{
+		return histogramData;
+	}
+
 	this.init = init;
+	this.getData = getData;
 }

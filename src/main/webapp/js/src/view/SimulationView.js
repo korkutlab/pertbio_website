@@ -3,6 +3,7 @@ var SimulationView = Backbone.View.extend({
 	{
 		var self = this;
 		var names = new MatrixList({directory: self.model.directory});
+		self.currentBarChart = null;
 
 		self.phenotypeMapping = {
 			"cellviability": "cell viability",
@@ -41,9 +42,27 @@ var SimulationView = Backbone.View.extend({
 		var self = this;
 		var simulationBox = self.$el.find(".simulation-box");
 
-		simulationBox.change(function(evt) {
-			var target = self.$el.find(".simulation-view");
+		var node1LineBox = self.$el.find(".node1-line-checkbox");
+		var node2LineBox = self.$el.find(".node2-line-checkbox");
 
+		var target = self.$el.find(".simulation-view");
+
+		var switchOpts = {
+			size: "mini",
+			onSwitchChange: function (event, state) {
+				if (self.currentBarChart != null)
+				{
+					self.initHistogram(self.currentBarChart.getData(),
+					                   target,
+					                   node1LineBox.is(":checked"),
+					                   node2LineBox.is(":checked"));
+				}
+			}
+		};
+		node1LineBox.bootstrapSwitch(switchOpts);
+		node2LineBox.bootstrapSwitch(switchOpts);
+
+		simulationBox.change(function(evt) {
 			// preserve prev selection if possible
 			var prevSelection = {
 				node1: $(target).find(".row-node-box").val(),
@@ -67,6 +86,24 @@ var SimulationView = Backbone.View.extend({
 
 		// trigger change function to load initial data...
 		simulationBox.change();
+	},
+	initHistogram: function(histogramData, target, line1, line2)
+	{
+		var self = this;
+		var histogramEl = target.find(".simulation-histogram");
+
+		// remove previous content
+		histogramEl.empty();
+
+		// draw the actual histogram (bar chart & line charts)
+		var barChart = new BarChart({el: histogramEl,
+				drawLine: [line1, line2],
+				yAxisLabel: "# of Models",
+				xAxisLabel: "Predicted Response: log(perturbed / non-perturbed)"},
+			histogramData);
+
+		barChart.init();
+		self.currentBarChart = barChart;
 	},
 	loadSimulation: function(target, simName, prevSelection)
 	{
@@ -132,34 +169,60 @@ var SimulationView = Backbone.View.extend({
 		};
 
 		// draws the actual histogram (bar chart)
-		var drawHistogram = function(node1, node2, strength1, strength2, type)
+		var drawHistogram = function(node1, node2, strength1, strength2, type, line1, line2)
 		{
 			var histogramData = new HistogramData({
 				name: histogramFile(node1, node2, strength1, strength2)});
 
 			var histogramEl = target.find(".simulation-histogram");
 
+			var histDataErrorFn = function(collection, response, options)
+			{
+				histogramEl.empty();
+
+				ViewUtil.displayErrorMessage(
+					"Error retrieving histogram data.");
+			};
+
 			histogramData.fetch({
 				success: function(collection, response, options)
 				{
-					// remove previous content
-					histogramEl.empty();
+					var data = {barChartData: response[type].binSummary};
 
-					// draw the actual histogram (bar chart)
-					var barChart = new BarChart({el: histogramEl,
-							yAxisLabel: "# of Models",
-							xAxisLabel: "Predicted Response: log(perturbed / non-perturbed)"},
-						response[type].binSummary);
+					// also fetch separate node1 and node2 data for additional
+					// overlay lines on the bar chart
+					if (node1 !== node2)
+					{
+						var node1data = new HistogramData({
+							name: histogramFile(node1, node1, strength1, strength1)});
 
-					barChart.init();
+						node1data.fetch({
+							success: function(collection, response, options)
+							{
+								var node2data = new HistogramData({
+									name: histogramFile(node2, node2, strength2, strength2)});
+
+								data.lineChartData = [];
+								data.lineChartData.push(response[type].binSummary);
+
+								node2data.fetch({
+									success: function(collection, response, options)
+									{
+										data.lineChartData.push(response[type].binSummary);
+										self.initHistogram(data, target, line1, line2);
+								    },
+									error: histDataErrorFn
+								});
+						    },
+							error: histDataErrorFn
+						});
+					}
+					else
+					{
+						self.initHistogram(data, target, line1, line2);
+					}
 				},
-				error: function(collection, response, options)
-				{
-					histogramEl.empty();
-
-					ViewUtil.displayErrorMessage(
-						"Error retrieving histogram data.");
-				}
+				error: histDataErrorFn
 			});
 
 			histogramEl.html(_.template($("#loader_template").html(), {}));
@@ -216,6 +279,8 @@ var SimulationView = Backbone.View.extend({
 					var strength1 = $(target).find(".row-strength-box").val();
 					var node2 = $(target).find(".col-node-box").val();
 					var strength2 = $(target).find(".col-strength-box").val();
+					var line1 = self.$el.find(".node1-line-checkbox").is(":checked");
+					var line2 = self.$el.find(".node2-line-checkbox").is(":checked");
 
 					var rowIdx = rowIdxMap[node1 + "_" + strength1];
 					var colIdx = colIdxMap[node2 + "_" + strength2];
@@ -231,7 +296,7 @@ var SimulationView = Backbone.View.extend({
 
 					var type = simName; // g1arrest, sarrest, etc.
 
-					drawHistogram(node1, node2, strength1, strength2, type);
+					drawHistogram(node1, node2, strength1, strength2, type, line1, line2);
 				});
 
 				// draw the histogram initially
