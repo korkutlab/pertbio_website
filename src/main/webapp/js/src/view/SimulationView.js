@@ -191,19 +191,20 @@ var SimulationView = Backbone.View.extend({
 
 					// also fetch separate node1 and node2 data for additional
 					// overlay lines on the bar chart
-					if (node1 !== node2)
-					{
-						var node1data = new HistogramData({
-							name: histogramFile(node1, node1, strength1, strength1)});
 
-						node1data.fetch({
-							success: function(collection, response, options)
+					var node1data = new HistogramData({
+						name: histogramFile(node1, node1, strength1, strength1)});
+
+					node1data.fetch({
+						success: function(collection, response, options)
+						{
+							data.lineChartData = [];
+							data.lineChartData.push(response[type].binSummary);
+
+							if (node1 !== node2)
 							{
 								var node2data = new HistogramData({
 									name: histogramFile(node2, node2, strength2, strength2)});
-
-								data.lineChartData = [];
-								data.lineChartData.push(response[type].binSummary);
 
 								node2data.fetch({
 									success: function(collection, response, options)
@@ -213,14 +214,14 @@ var SimulationView = Backbone.View.extend({
 								    },
 									error: histDataErrorFn
 								});
-						    },
-							error: histDataErrorFn
-						});
-					}
-					else
-					{
-						self.initHistogram(data, target, line1, line2);
-					}
+							}
+							else
+							{
+								self.initHistogram(data, target, line1, line2);
+							}
+					    },
+						error: histDataErrorFn
+					});
 				},
 				error: histDataErrorFn
 			});
