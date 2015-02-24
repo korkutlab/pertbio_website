@@ -136,8 +136,14 @@ function BarChart(options, histogramData)
 
 			// generate line function
 			var line = d3.svg.line()
-				.x(function(d) { return x(d.average); })
-				.y(function(d) { return y(d.count); })
+				.x(function(d) {
+					// + (x.rangeBand() /2) is required to set the point to the center
+					// of the bar (rectangle). a bar's width is set to x.rangeBand()
+					return x(d.average) + (x.rangeBand() / 2);
+				})
+				.y(function(d) {
+					return y(d.count);
+				})
 				.interpolate("monotone");
 
 			// append the line (path)
@@ -225,10 +231,16 @@ function BarChart(options, histogramData)
 			.data(data)
 			.enter().append("rect")
 			.attr("class", "bar")
-			.attr("x", function(d) { return x(d.average); })
+			.attr("x", function(d) {
+				return x(d.average);
+			})
 			.attr("width", x.rangeBand())
-			.attr("y", function(d) { return y(d.count); })
-			.attr("height", function(d) { return height - y(d.count); })
+			.attr("y", function(d) {
+				return y(d.count);
+			})
+			.attr("height", function(d) {
+				return height - y(d.count);
+			})
 			.attr("fill", _options.barFillColor)
 			.on('mouseover', tip.show)
 			.on('mouseout', tip.hide);
