@@ -33,6 +33,14 @@ var MainView = Backbone.View.extend({
 			// initialize the tab on the first click
 			self.initSimulationTab();
 		});
+
+		self.$el.find(".link-cross-validation").one("click", function(evt) {
+			// initialize the tab on the first click
+			// (add a small delay to allow some UI components initialize properly)
+			setTimeout(function() {
+				self.initCrossValidationTab();
+			}, 200);
+		});
 	},
 	initNetworkView: function()
 	{
@@ -61,14 +69,27 @@ var MainView = Backbone.View.extend({
 	{
 		var self = this;
 
-		var modelView = new SimulationView({
+		var simulationView = new SimulationView({
 			el: self.$el.find("#tab-simulation"),
 			model: {
 				directory: "simulation"
 			}
 		});
 
-		modelView.render();
+		simulationView.render();
+	},
+	initCrossValidationTab: function()
+	{
+		var self = this;
+
+		var crossValView = new CrossValidationView({
+			el: self.$el.find("#tab-cross-validation"),
+			model: {
+				directory: "cross_validation"
+			}
+		});
+
+		crossValView.render();
 	},
 	initModelTab: function()
 	{

@@ -81,6 +81,7 @@
 	<script src="js/src/view/NetworkView.js"></script>
 	<script src="js/src/view/ModelView.js"></script>
 	<script src="js/src/view/SimulationView.js"></script>
+	<script src="js/src/view/CrossValidationView.js"></script>
 	<script src="js/src/peralyzer.js"></script>
 
 	<!-- Backbone templates -->
@@ -104,6 +105,7 @@
 					<li><a href="#tab-data-matrix" data-toggle="tab" class="link-data-matrix">Data Matrices</a></li>
 					<li><a href="#tab-model" data-toggle="tab" class="link-model">Models</a></li>
 					<li><a href="#tab-simulation" data-toggle="tab" class="link-simulation">Simulation</a></li>
+					<li><a href="#tab-cross-validation" data-toggle="tab" class="link-cross-validation">Cross Validation</a></li>
 					<li><a href="#tab-source-code" data-toggle="tab">Source Code</a></li>
 					<li><a href="#tab-about" data-toggle="tab">About</a></li>
 				</ul>
@@ -125,6 +127,9 @@
 			</div>
 			<div role="tabpanel" class="tab-pane" id="tab-model"></div>
 			<div role="tabpanel" class="tab-pane" id="tab-simulation">
+				<img src="images/loading.gif" alt="Loading...">
+			</div>
+			<div role="tabpanel" class="tab-pane" id="tab-cross-validation">
 				<img src="images/loading.gif" alt="Loading...">
 			</div>
 			<div role="tabpanel" class="tab-pane" id="tab-source-code"></div>
@@ -250,6 +255,56 @@
 						<div>
 							<select class="select-box col-strength-box span2" tabindex="1">
 								{{colStrengthSelectOptions}}
+							</select>
+						</div>
+					</td>
+					<td>
+						<button class="btn btn-default simulate-button" type="button">Simulate</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="simulation-result">
+			<div class="simulation-summary"></div>
+			<div class="simulation-histogram"></div>
+		</div>
+	</script>
+
+	<script type="text/template" id="cross_validation_visualizer_template">
+		<div class="simulation-controls">
+			<table class="simulation-controls-table">
+				<tr>
+					<td>
+						<div class="select-box-title cross-validation-select-title">Readout</div>
+						<div>
+							<select class="select-box cross-validation-box span2" tabindex="1">
+								{{selectOptions}}
+							</select>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="simulation-view"></div>
+	</script>
+
+	<script type="text/template" id="cross_validation_view_template">
+		<div class="node-strength-selection">
+			<table class="node-strength-selection-table">
+				<tr>
+					<td>
+						<div class="select-box-title node-select-title">Perturbation 1</div>
+						<div>
+							<select class="select-box row-node-box span2" tabindex="1">
+								{{rowNodeSelectOptions}}
+							</select>
+						</div>
+					</td>
+					<td>
+						<div class="select-box-title node-select-title">Perturbation 2</div>
+						<div>
+							<select class="select-box col-node-box span2" tabindex="1">
+								{{colNodeSelectOptions}}
 							</select>
 						</div>
 					</td>
