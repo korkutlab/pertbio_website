@@ -19,17 +19,10 @@ function main(args)
 	var PREFIX = "predict";
 	var SUFFIX = ".txt";
 	var DEFAULT_BIN_COUNT = 100;
+	var DEFAULT_INDEX_FILE = "simul_columns_of_interest.json";
 
 	// map of <column name, column index> pairs (of select columns only)
-	// TODO use node_index.txt if possible
-	var indexMap = {
-		//error: 101,
-		g2m: 84,
-		g1arrest: 85,
-		g2arrest: 86,
-		sarrest: 87,
-		cellviability: 88
-	};
+	var indexMap = null;
 
 	/**
 	 * Recursive traversal of the target directory.
@@ -260,19 +253,29 @@ function main(args)
 		return histogramData;
 	}
 
+	function generateColumnIndex(indexFile)
+	{
+		var fileContent = fs.readFileSync(indexFile).toString();
+
+		// error: 101
+		return JSON.parse(fileContent);
+	}
+
 	// args[0]: node -- args[1]: generateHistogramData.js
 	var inputDir = args[2];
 	var outputDir = args[3];
-	var binCount = args[4] || DEFAULT_BIN_COUNT;
+	var columnIndexFile = args[4] || DEFAULT_INDEX_FILE;
+	var binCount = args[5] || DEFAULT_BIN_COUNT;
 
 	if (inputDir && outputDir)
 	{
+		indexMap = generateColumnIndex(columnIndexFile);
 		var globalMaxMin = calcGlobalMaxMin(inputDir);
 		generateData(inputDir, outputDir, globalMaxMin, binCount);
 	}
 	else
 	{
-		console.log("usage: node generateHistogramData.js <input_dir> <output_dir> [<number_of_bins>]");
+		console.log("usage: node generateHistogramData.js <input_dir> <output_dir> [<column_index_file> <number_of_bins>]");
 	}
 }
 
