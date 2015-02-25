@@ -259,7 +259,7 @@
 						</div>
 					</td>
 					<td>
-						<button class="btn btn-default simulate-button" type="button">Simulate</div>
+						<button class="btn btn-default simulate-button" type="button">Visualize</div>
 					</td>
 				</tr>
 			</table>
@@ -309,7 +309,7 @@
 						</div>
 					</td>
 					<td>
-						<button class="btn btn-default simulate-button" type="button">Simulate</div>
+						<button class="btn btn-default simulate-button" type="button">Visualize</div>
 					</td>
 				</tr>
 			</table>
