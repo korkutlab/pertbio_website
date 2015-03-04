@@ -88,7 +88,7 @@
 
 	<script type="text/template" id="main_view_template">
 		<!-- Navigation Bar -->
-		<div class="navbar navbar-default peralyzer-navbar navbar-fixed-top" role="navigation">
+		<div class="navbar navbar-default peralyzer-navbar navbar-static-top" role="navigation">
 		<!--div class="navbar navbar-default peralyzer-navbar navbar-collapse collapse navbar-fixed-top" role="navigation">
 			<div class="navbar-header">
 				<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".peralyzer-navbar">
@@ -114,7 +114,7 @@
 
 		<!-- Tab Panes -->
 		<div class="tab-content">
-			<div role="tabpanel" class="tab-pane active container home-page-div" id="tab-home-page">
+			<div role="tabpanel" class="tab-pane active container home-pane" id="tab-home-page">
 				<div class="home-page-main-text">
 					<h4>What is <b>perturbation biology</b>?</h4>
 					<p class="main-paragraph">
@@ -153,18 +153,18 @@
 					</p>
 				</div>
 			</div>
-			<div role="tabpanel" class="tab-pane" id="tab-data-matrix">
+			<div role="tabpanel" class="tab-pane default-pane" id="tab-data-matrix">
 				<img src="images/loading.gif" alt="Loading...">
 			</div>
-			<div role="tabpanel" class="tab-pane" id="tab-model"></div>
-			<div role="tabpanel" class="tab-pane" id="tab-simulation">
+			<div role="tabpanel" class="tab-pane default-pane" id="tab-model"></div>
+			<div role="tabpanel" class="tab-pane default-pane" id="tab-simulation">
 				<img src="images/loading.gif" alt="Loading...">
 			</div>
-			<div role="tabpanel" class="tab-pane" id="tab-cross-validation">
+			<div role="tabpanel" class="tab-pane default-pane" id="tab-cross-validation">
 				<img src="images/loading.gif" alt="Loading...">
 			</div>
-			<div role="tabpanel" class="tab-pane" id="tab-source-code"></div>
-			<div role="tabpanel" class="tab-pane" id="tab-about"></div>
+			<div role="tabpanel" class="tab-pane default-pane" id="tab-source-code"></div>
+			<div role="tabpanel" class="tab-pane default-pane" id="tab-about"></div>
 		</div>
 	</script>
 
