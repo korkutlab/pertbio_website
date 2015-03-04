@@ -99,7 +99,7 @@
 				</button>
 				<a href="#" class="navbar-brand">Peralyzer</a>
 			</div-->
-			<div>
+			<div class="navbar-inner">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#tab-home-page" data-toggle="tab">Home</a></li>
 					<li><a href="#tab-data-matrix" data-toggle="tab" class="link-data-matrix">Data Matrices</a></li>
@@ -114,12 +114,43 @@
 
 		<!-- Tab Panes -->
 		<div class="tab-content">
-			<div role="tabpanel" class="tab-pane active" id="tab-home-page">
-				<div>
-					Some text here...
+			<div role="tabpanel" class="tab-pane active container home-page-div" id="tab-home-page">
+				<div class="home-page-main-text">
+					<h4>What is <b>perturbation biology</b>?</h4>
+					<p class="main-paragraph">
+						Perturbation biology is an experimental-computational technology for inferring
+						network models that predict the response of cells to perturbations,
+						and that may be useful in the design of combinatorial therapy against cancer.
+						Beyond nomination of effective drug combinations, the perturbation biology
+						method paves the way for model-driven quantitative cell biology with diverse
+						applications in many fields of biology.
+					</p>
 				</div>
-				<div>
+				<div class="home-page-main-image">
 					<img src="images/figure1_bpmel.png" class="img-responsive" alt="BP mel">
+				</div>
+				<div class="home-page-image-text">
+					<h4>How does <b>perturbation biology</b> work?</h4>
+					<p class="main-paragraph">
+						Perturbation biology involves systematic perturbations of cells with combinations of
+						targeted compounds (Box 1-2), high-throughput measurements of response profiles (Box 2),
+						automated extraction of prior signaling information from databases (Box 3-4),
+						construction of ODE-based signaling pathway models (Box 5) with the belief propagation (BP)
+						based network inference algorithm (Box 6) and prediction of system response to
+						novel perturbations with the models and simulations (Box 7).
+						The "prior extraction and reduction algorithm" (PERA) generates a qualitative prior model,
+						which is a network of known interactions between the proteins of interest
+						(i.e., profiled (phospho)proteins). This is achieved through a search in
+						the Pathway Commons information resource, which integrates biological pathway information
+						from multiple public databases (Box 3-4). In the quantitative network models,
+						the nodes represent measured levels of (phospho)proteins or cellular phenotypes and
+						the edges represent the influence of the upstream nodes on the time derivative of
+						their downstream effectors. This definition corresponds to a simple yet efficient
+						ODE-based mathematical description of models (Box 5). Our BP-based modeling approach
+						combines information from the perturbation data (phosphoproteomic and phenotypic) with
+						prior information to generate network models of signaling (Box 6). We execute the resulting
+						ODE based models to predict system response to untested perturbation conditions (Box 7).
+					</p>
 				</div>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="tab-data-matrix">
