@@ -13,6 +13,15 @@ var MainView = Backbone.View.extend({
 		// load the compiled HTML into the Backbone "el"
 		self.$el.html(template);
 
+		// load static content as well
+
+		self.$el.find("#tab-home-page").html(
+			_.template($("#home_page_template").html(), {}));
+		self.$el.find("#tab-model-method").html(
+			_.template($("#network_modelling_template").html(), {}));
+		self.$el.find("#tab-prediction-background").html(
+			_.template($("#prediction_bg_template").html(), {}));
+
 		self.format();
 	},
 	format: function()
