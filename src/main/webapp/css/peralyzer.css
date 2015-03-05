@@ -6,7 +6,7 @@
 	margin: 0.25em;
 }
 
-.home-page-main-image {
+.main-image {
 	max-width: 800px;
 	margin-left: auto;
 	margin-right: auto;
@@ -14,10 +14,17 @@
 	margin-bottom: 15px;
 }
 
-.main-paragraph
-{
+.main-paragraph {
 	border-left: 1px solid #cecece;
 	padding-left: 15px;
+}
+
+.stressed-text {
+	font-style: italic;
+}
+
+.tab-pane h4 {
+	font-weight: bold;
 }
 
 .home-pane {

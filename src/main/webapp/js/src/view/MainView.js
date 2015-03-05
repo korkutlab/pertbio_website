@@ -24,7 +24,7 @@ var MainView = Backbone.View.extend({
 			self.initDataMatrixTab();
 		});
 
-		self.$el.find(".link-model").one("click", function(evt) {
+		self.$el.find(".link-exec-model").one("click", function(evt) {
 			// initialize the tab on the first click
 			self.initModelTab();
 		});
@@ -96,7 +96,7 @@ var MainView = Backbone.View.extend({
 		var self = this;
 
 		var modelView = new ModelView({
-			el: self.$el.find("#tab-model"),
+			el: self.$el.find("#tab-exec-model"),
 			model: {
 				directory: "decimation_models|models1",
 				nodeIndexFile: "decimation_models|node_index"
