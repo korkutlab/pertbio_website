@@ -27,6 +27,11 @@
 	font-weight: bold;
 }
 
+.tab-pane {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
 .home-pane {
 	text-align: justify;
 }
@@ -97,10 +102,6 @@
 	margin-left: 80px;
 	margin-top: 20px;
 	margin-bottom: 10px;
-}
-
-body {
-	min-height: 1080px;
 }
 
 /* LEGEND style */

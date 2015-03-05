@@ -82,7 +82,7 @@
 
 	<script type="text/template" id="main_view_template">
 		<!-- Navigation Bar -->
-		<div class="navbar navbar-default peralyzer-navbar navbar-static-top" role="navigation">
+		<div class="navbar navbar-default peralyzer-navbar navbar-fixed-top" role="navigation">
 		<!--div class="navbar navbar-default peralyzer-navbar navbar-collapse collapse navbar-fixed-top" role="navigation">
 			<div class="navbar-header">
 				<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".peralyzer-navbar">

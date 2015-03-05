@@ -13,6 +13,12 @@ var MainView = Backbone.View.extend({
 		// load the compiled HTML into the Backbone "el"
 		self.$el.html(template);
 
+		// fix for fixed nav-bar to prevent overlapping the content
+		self.adjustNavBar();
+		$(window).resize(function () {
+			self.adjustNavBar();
+		});
+
 		// load static content as well
 
 		self.$el.find("#tab-home-page").html(
@@ -23,6 +29,13 @@ var MainView = Backbone.View.extend({
 			_.template($("#prediction_bg_template").html(), {}));
 
 		self.format();
+	},
+	adjustNavBar: function()
+	{
+		var self = this;
+		var navBar = self.$el.find(".peralyzer-navbar");
+
+		$('body').css('padding-top', parseInt(navBar.css("height")));
 	},
 	format: function()
 	{
