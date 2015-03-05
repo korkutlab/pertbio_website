@@ -7,6 +7,7 @@
 var fs = require('fs');
 var system = require('system');
 var _ = require('underscore');
+var stats = require('simple-statistics');
 
 // TODO this is a traditional way to import a regular JS file: define a nodejs module instead!
 eval(fs.readFileSync('../webapp/js/src/util/MatrixParser.js').toString());
@@ -19,6 +20,7 @@ function main(args)
 	var PREFIX = "predict";
 	var SUFFIX = ".txt";
 	var DEFAULT_BIN_COUNT = 100;
+	var DEFAULT_DISTORTION = 1.3;
 	var DEFAULT_INDEX_FILE = "simul_columns_of_interest.json";
 
 	// map of <column name, column index> pairs (of select columns only)
@@ -73,7 +75,7 @@ function main(args)
 		return dataSlice;
 	}
 
-	function calcGlobalMaxMin(inputDir)
+	function calcGlobalMaxMin(inputDir, distortion)
 	{
 		var globalMaxMin = {};
 
@@ -96,6 +98,10 @@ function main(args)
 				{
 					var content = fs.readFileSync(filename).toString();
 					var matrix = MatrixParser.parseInput({input: content});
+
+					// multiply all data points with the distortion value before processing the matrix
+					matrix = distortMatrix(matrix, distortion);
+
 					var maxMin = calcMaxMin(matrix);
 
 					// update global max and min if necessary
@@ -119,7 +125,28 @@ function main(args)
 		return globalMaxMin;
 	}
 
-	function generateData(inputDir, outputDir, maxMin, binCount)
+	/**
+	 * Multiplies all data points with the distortion value for the
+	 * provided matrix.
+	 *
+	 * @param matrix        matrix object
+	 * @param distortion    multiplication factor
+	 * @returns {Object}    reference to the original matrix object
+	 */
+	function distortMatrix(matrix, distortion)
+	{
+		for (var i=0; i < matrix.data.length; i++)
+		{
+			for (var j=0; j < matrix.data[i].length; j++)
+			{
+				matrix.data[i][j] = matrix.data[i][j] * distortion;
+			}
+		}
+
+		return matrix;
+	}
+
+	function generateData(inputDir, outputDir, maxMin, binCount, distortion)
 	{
 		walk(inputDir, function(err, results) {
 			if (err)
@@ -135,6 +162,10 @@ function main(args)
 				{
 					var content = fs.readFileSync(filename).toString();
 					var matrix = MatrixParser.parseInput({input: content});
+
+					// multiply all data points with the distortion value before processing the matrix
+					matrix = distortMatrix(matrix, distortion);
+
 					var histogramData = processMatrix(matrix, maxMin, binCount);
 
 					var sliceIdx = filename.lastIndexOf("/");
@@ -192,6 +223,11 @@ function main(args)
 			var max = maxMin[key].max;
 			var binInterval = (max - min) / binCount;
 
+			// calculate mean, median, std deviation
+			var mean = stats.mean(dataSlice[key]);
+			// var median = stats.median(dataSlice[key]); // median is almost always zero
+			var stdDev = stats.standard_deviation(dataSlice[key]);
+
 			// init bin data object
 			var binData = {};
 			var minBinIdx = Math.floor(min/binInterval);
@@ -214,6 +250,9 @@ function main(args)
 				binInterval: binInterval,
 				min: min,
 				max: max,
+				mean: mean,
+				//median: median,
+				stdDev: stdDev,
 				binSummary: []
 			};
 
@@ -266,16 +305,17 @@ function main(args)
 	var outputDir = args[3];
 	var columnIndexFile = args[4] || DEFAULT_INDEX_FILE;
 	var binCount = args[5] || DEFAULT_BIN_COUNT;
+	var distortion = args[6] || DEFAULT_DISTORTION;
 
 	if (inputDir && outputDir)
 	{
 		indexMap = generateColumnIndex(columnIndexFile);
-		var globalMaxMin = calcGlobalMaxMin(inputDir);
-		generateData(inputDir, outputDir, globalMaxMin, binCount);
+		var globalMaxMin = calcGlobalMaxMin(inputDir, distortion);
+		generateData(inputDir, outputDir, globalMaxMin, binCount, distortion);
 	}
 	else
 	{
-		console.log("usage: node generateHistogramData.js <input_dir> <output_dir> [<column_index_file> <number_of_bins>]");
+		console.log("usage: node generateHistogramData.js <input_dir> <output_dir> [<column_index_file> <number_of_bins> <distortion>]");
 	}
 }
 
