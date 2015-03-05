@@ -1,4 +1,4 @@
-#main_network_view {
+.network-container {
 	height: 550px;
 	border: 1px solid #ddd;
 	overflow: hidden !important;

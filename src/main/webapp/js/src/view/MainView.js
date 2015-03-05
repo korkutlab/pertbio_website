@@ -38,6 +38,11 @@ var MainView = Backbone.View.extend({
 			self.initModelTab();
 		});
 
+		self.$el.find(".link-ave-model").one("click", function(evt) {
+			// initialize the tab on the first click
+			self.initNetworkView();
+		});
+
 		self.$el.find(".link-simulation").one("click", function(evt) {
 			// initialize the tab on the first click
 			self.initSimulationTab();
@@ -53,7 +58,7 @@ var MainView = Backbone.View.extend({
 	},
 	initNetworkView: function()
 	{
-		// TODO where to display the network view?
+		var self = this;
 		var networkData = new NetworkData({model: "average_bpmel_model_example"});
 
 		networkData.fetch({
@@ -61,11 +66,11 @@ var MainView = Backbone.View.extend({
 			data: {model: networkData.get("model")},
 			success: function(collection, response, options)
 			{
-				var netViewOpts = {el: "#main_network_view",
+				var netViewOpts = {el: self.$el.find("#tab-ave-model"),
 					model: {data: response.elements}};
 
 				var netView = new NetworkView(netViewOpts);
-				//netView.render();
+				netView.render();
 			},
 			error: function(collection, response, options)
 			{

@@ -136,8 +136,10 @@
 
 			<div role="tabpanel" class="tab-pane container" id="tab-model-method"></div>
 
-			<div role="tabpanel" class="tab-pane default-pane" id="tab-ave-model">
-				TODO: network model here
+			<div role="tabpanel" class="tab-pane container" id="tab-ave-model">
+				<div class="network-container">
+					<img src="images/loading.gif" alt="Loading...">
+				</div>
 			</div>
 
 			<div role="tabpanel" class="tab-pane default-pane" id="tab-exec-model"></div>

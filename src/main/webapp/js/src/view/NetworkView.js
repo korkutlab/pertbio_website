@@ -2,7 +2,7 @@ var NetworkView = Backbone.View.extend({
 	render: function()
 	{
 		var self = this;
-		var container = $(self.el);
+		var container = $(self.el).find(".network-container");
 
 		var cyStyle = cytoscape.stylesheet()
 	        .selector("node")
