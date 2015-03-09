@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
   <head>
     <meta charset="utf-8">
-    <title>Peralyzer</title>
+    <title>PertBio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- jQuery UI -->
@@ -91,7 +91,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a href="#" class="navbar-brand">Peralyzer</a>
+				<a href="#" class="navbar-brand">PertBio</a>
 			</div-->
 			<div class="navbar-inner">
 				<ul class="nav navbar-nav">
