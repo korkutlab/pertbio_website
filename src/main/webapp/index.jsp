@@ -293,6 +293,11 @@
 		</div>
 	</script>
 
+	<script type="text/template" id="simulation_summary_template">
+		<span class="average-response">Average response: {{mean}}</span>
+		<span class="standard-deviation">Standard deviation: {{stdDev}}</span>
+	</script>
+
 	<script type="text/template" id="cross_validation_visualizer_template">
 		<div class="simulation-controls">
 			<table class="simulation-controls-table">

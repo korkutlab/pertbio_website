@@ -188,6 +188,16 @@ var SimulationView = Backbone.View.extend({
 				success: function(collection, response, options)
 				{
 					var data = {barChartData: response[type].binSummary};
+					var mean =  response[type].mean;
+					var stdDev = response[type].stdDev;
+
+					var summaryViewVars = {
+						mean: mean.toFixed(5),
+						stdDev: stdDev.toFixed(5)
+					};
+
+					var templateFn = _.template($("#simulation_summary_template").html());
+					$(target).find(".simulation-summary").html(templateFn(summaryViewVars));
 
 					// also fetch separate node1 and node2 data for additional
 					// overlay lines on the bar chart
@@ -292,8 +302,9 @@ var SimulationView = Backbone.View.extend({
 					}
 
 					// fetch the actual value from the average data matrix & visualize...
-					$(target).find(".simulation-summary").html("Average: " +
-						matrix.data[rowIdx][colIdx]);
+//					$(target).find(".simulation-summary").html("Average: " +
+//						matrix.data[rowIdx][colIdx]);
+//					console.log("average response: " + (matrix.data[rowIdx][colIdx] * 1.3));
 
 					var type = simName; // g1arrest, sarrest, etc.
 

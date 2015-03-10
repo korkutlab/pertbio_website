@@ -104,6 +104,9 @@
 	margin-bottom: 10px;
 }
 
+.average-response {
+	margin-right: 20px;
+}
 /* LEGEND style */
 
 .legend-axis path {
