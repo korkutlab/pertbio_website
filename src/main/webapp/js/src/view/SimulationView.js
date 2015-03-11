@@ -110,6 +110,7 @@ var SimulationView = Backbone.View.extend({
 		var self = this;
 		var baseDir = self.model.directory;
 		var initialSelection = null;
+		var defaultNaValue = " N/A ";
 
 		// strength to numerical value mapping
 		var strengthMapping = {
@@ -122,13 +123,21 @@ var SimulationView = Backbone.View.extend({
 		var matrixData = new MatrixData({name: baseDir + "|" + simName});
 
 		// extracts select options for the given headers
-		var extractOptions = function(headers)
+		var extractOptions = function(headers, naValue)
 		{
 			var nodeSelectOptions = [];
 			var strengthSelectOptions = [];
 
+			var templateFn = _.template($("#select_item_template").html());
+
+			if (naValue)
+			{
+				nodeSelectOptions.push(
+					templateFn({selectId: naValue, selectName: naValue}));
+			}
+
 			_.each(headers, function(name) {
-				var templateFn = _.template($("#select_item_template").html());
+
 				var parts = name.split("_");
 
 				nodeSelectOptions.push(
@@ -153,7 +162,8 @@ var SimulationView = Backbone.View.extend({
 			var strBuilder = ["predict"];
 
 			// ignore node2 selection if they are the same
-			if (node1 === node2)
+			if (node1 === node2 ||
+				node2 === defaultNaValue)
 			{
 				strBuilder.push(node1);
 				strBuilder.push(strengthMapping[strength1]);
@@ -212,7 +222,8 @@ var SimulationView = Backbone.View.extend({
 							data.lineChartData = [];
 							data.lineChartData.push(response[type].binSummary);
 
-							if (node1 !== node2)
+							if (node1 !== node2 &&
+							    node2 !== defaultNaValue)
 							{
 								var node2data = new HistogramData({
 									name: histogramFile(node2, node2, strength2, strength2)});
@@ -257,7 +268,7 @@ var SimulationView = Backbone.View.extend({
 				var rowIdxMap = HeatMapDataUtil.getIndexMap(matrix.rowHeaders);
 
 				var rowOpts = extractOptions(matrix.rowHeaders);
-				var colOpts = extractOptions(matrix.columnHeaders);
+				var colOpts = extractOptions(matrix.columnHeaders, defaultNaValue);
 
 				// set default (initial) selection values
 				if (_.contains(matrix.rowHeaders, "aMEK_IC60") &&
@@ -316,7 +327,8 @@ var SimulationView = Backbone.View.extend({
 					var rowIdx = rowIdxMap[node1 + "_" + strength1];
 					var colIdx = colIdxMap[node2 + "_" + strength2];
 
-					if (node1 === node2)
+					if (node1 === node2 ||
+						node2 === defaultNaValue)
 					{
 						colIdx = rowIdx;
 					}
