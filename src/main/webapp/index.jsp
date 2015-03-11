@@ -83,16 +83,16 @@
 	<script type="text/template" id="main_view_template">
 		<!-- Navigation Bar -->
 		<div class="navbar navbar-default peralyzer-navbar navbar-fixed-top" role="navigation">
-		<!--div class="navbar navbar-default peralyzer-navbar navbar-collapse collapse navbar-fixed-top" role="navigation">
+		<!--div class="navbar navbar-default peralyzer-navbar navbar-collapse collapse navbar-fixed-top" role="navigation"-->
 			<div class="navbar-header">
-				<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".peralyzer-navbar">
+				<!--button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".peralyzer-navbar">
 					<span class="sr-only">...</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
-				</button>
+				</button-->
 				<a href="#" class="navbar-brand">PertBio</a>
-			</div-->
+			</div>
 			<div class="navbar-inner">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#tab-home-page" data-toggle="tab">Home</a></li>
