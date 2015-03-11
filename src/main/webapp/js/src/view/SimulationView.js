@@ -109,6 +109,7 @@ var SimulationView = Backbone.View.extend({
 	{
 		var self = this;
 		var baseDir = self.model.directory;
+		var initialSelection = null;
 
 		// strength to numerical value mapping
 		var strengthMapping = {
@@ -258,6 +259,18 @@ var SimulationView = Backbone.View.extend({
 				var rowOpts = extractOptions(matrix.rowHeaders);
 				var colOpts = extractOptions(matrix.columnHeaders);
 
+				// set default (initial) selection values
+				if (_.contains(matrix.rowHeaders, "aMEK_IC60") &&
+				    _.contains(matrix.columnHeaders, "c-Myc_IC60"))
+				{
+					initialSelection = {
+						node1: "aMEK",
+						node2: "c-Myc",
+						strength1: "IC60",
+						strength2: "IC60"
+					};
+				}
+
 				var variables = {
 					rowNodeSelectOptions: rowOpts.nodeSelectOptions,
 					rowStrengthSelectOptions: rowOpts.strengthSelectOptions,
@@ -277,6 +290,13 @@ var SimulationView = Backbone.View.extend({
 					$(target).find(".row-strength-box").val(prevSelection.strength1);
 					$(target).find(".col-node-box").val(prevSelection.node2);
 					$(target).find(".col-strength-box").val(prevSelection.strength2);
+				}
+				else if (initialSelection != null)
+				{
+					$(target).find(".row-node-box").val(initialSelection.node1);
+					$(target).find(".row-strength-box").val(initialSelection.strength1);
+					$(target).find(".col-node-box").val(initialSelection.node2);
+					$(target).find(".col-strength-box").val(initialSelection.strength2);
 				}
 
 				$(target).find(".select-box").chosen({
