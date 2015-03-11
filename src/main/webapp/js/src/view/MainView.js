@@ -68,6 +68,11 @@ var MainView = Backbone.View.extend({
 				self.initCrossValidationTab();
 			}, 200);
 		});
+
+		self.$el.find(".navbar-brand").click(function(evt) {
+			evt.preventDefault();
+			self.$el.find(".link-home-page").click();
+		})
 	},
 	initNetworkView: function()
 	{

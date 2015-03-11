@@ -95,7 +95,9 @@
 			</div>
 			<div class="navbar-inner">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#tab-home-page" data-toggle="tab">Home</a></li>
+					<li class="active">
+						<a href="#tab-home-page" data-toggle="tab" class="link-home-page">Home</a>
+					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Data <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
