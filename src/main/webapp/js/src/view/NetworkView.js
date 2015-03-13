@@ -14,7 +14,7 @@ var NetworkView = Backbone.View.extend({
 	            //"shape": "data(shape)",
 	            "border-width": 2,
 	            //"background-color": "mapData(altered, 0, 1, #DDDDDD, red)",
-				"background-color": "#DDDDDD",
+				"background-color": "data(node_fillColor)",
 	            "border-color": "#555",
 	            "font-size": "15"
 	        })
@@ -23,8 +23,17 @@ var NetworkView = Backbone.View.extend({
 	            //"width": "mapData(cited, 5, 50, 0.4, 0.5)",
 				"width": 1.5,
 	            "line-color": "#444",
-				"target-arrow-shape": "triangle"
+				"target-arrow-shape": "triangle",
+				"target-arrow-color": "#101010"
 	        })
+			.selector("edge[interaction='inhibit']")
+			.css({
+			     "line-color": "#FF0000"
+			})
+			.selector("edge[interaction='activate']")
+			.css({
+			     "line-color": "#00FF00"
+			})
 	        .selector("[?isdirected]")
 	        .css({
 	            "target-arrow-shape": "triangle"

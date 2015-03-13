@@ -142,6 +142,18 @@
 				<div class="network-container">
 					<img src="images/loading.gif" alt="Loading...">
 				</div>
+				<div class="span8 edge-legend" id="edge-legend">
+					<table>
+						<tr>
+							<td><div class="legend-rect legend-edge-inhibit"></div>Inhibits</td>
+							<td><div class="legend-rect legend-edge-activate"></div>Activates</td>
+						</tr>
+						<!--tr>
+							<td><div class="legend-rect legend-in-pc-true"></div>In Pathway Commons</td>
+							<td><div class="legend-rect legend-in-pc-false"></div>Not In Pathway Commons</td>
+						</tr-->
+					</table>
+				</div>
 			</div>
 
 			<div role="tabpanel" class="tab-pane default-pane" id="tab-exec-model"></div>

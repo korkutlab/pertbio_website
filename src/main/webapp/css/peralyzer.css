@@ -121,7 +121,34 @@
 	font-size: 60px;
 	font-weight: bold;
 }
-/* LEGEND style */
+
+/* Network view legend style */
+
+.edge-legend {
+	width: 99%;
+}
+.edge-legend table {
+	margin-left: auto;
+	margin-right: auto;
+}
+.edge-legend table td {
+	padding-right: 20px;
+}
+.legend-rect {
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+	margin-right: 5px;
+	color: #101010;
+}
+.legend-edge-inhibit {
+	background-color: #FF0000;
+}
+.legend-edge-activate {
+	background-color: #00FF00;
+}
+
+/* Matrix LEGEND style */
 
 .legend-axis path {
 	display: none;
