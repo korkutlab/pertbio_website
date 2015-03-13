@@ -46,8 +46,9 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<excludes>
-					<exclude>data/**</exclude>
-					<exclude>edgelists/**</exclude>
+					<exclude>historgram_data/**</exclude>
+					<exclude>matrix_data/**</exclude>
+					<exclude>network_models/**</exclude>
 				</excludes>
 			</resource>
 		</resources>
