@@ -115,11 +115,20 @@
 
 .home-page-header {
 	text-align: center;
+	font-weight: bold;
 }
 
 .home-page-header h1 {
 	font-size: 60px;
 	font-weight: bold;
+}
+
+.home-page-header-tag {
+	color: #999999;
+}
+
+.header-emphasis {
+	font-size: 150%;
 }
 
 /* Network view legend style */
