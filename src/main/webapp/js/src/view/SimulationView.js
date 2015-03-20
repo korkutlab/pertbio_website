@@ -110,7 +110,7 @@ var SimulationView = Backbone.View.extend({
 		var self = this;
 		var baseDir = self.model.directory;
 		var initialSelection = null;
-		var defaultNaValue = " N/A ";
+		var defaultNaValue = " NONE ";
 
 		// strength to numerical value mapping
 		var strengthMapping = {
