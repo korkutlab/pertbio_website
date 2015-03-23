@@ -1,6 +1,8 @@
 package org.cbio.peralyzer.service;
 
 import flexjson.JSONSerializer;
+import org.apache.commons.fileupload.InvalidFileNameException;
+import org.cbio.peralyzer.util.IOUtil;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 
@@ -9,9 +11,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 //TODO do not allow access to .. or /
 public class MatrixDataService
@@ -29,8 +29,13 @@ public class MatrixDataService
 	}
 
 	@Cacheable("matrixServiceListCache")
-	public String listMatrices(String directory) throws IOException
+	public String listMatrices(String directory) throws IOException, InvalidFileNameException
 	{
+		if (!IOUtil.isValidFilename(directory))
+		{
+			throw new InvalidFileNameException(directory, "Invalid filename.");
+		}
+
 		String dirName = this.getMatrixDataResource().getFile().getAbsolutePath() +
 		                  "/" + directory.replaceAll("\\|", "/");
 
@@ -64,8 +69,13 @@ public class MatrixDataService
 	}
 
 	@Cacheable("matrixServiceDataCache")
-	public String getMatrixData(String name) throws IOException
+	public String getMatrixData(String name) throws IOException, InvalidFileNameException
 	{
+		if (!IOUtil.isValidFilename(name))
+		{
+			throw new InvalidFileNameException(name, "Invalid filename.");
+		}
+
 		String filename = this.getMatrixDataResource().getFile().getAbsolutePath() +
 		                  "/" + name.replaceAll("\\|", "/") + ".txt";
 

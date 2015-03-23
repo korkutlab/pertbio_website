@@ -1,5 +1,7 @@
 package org.cbio.peralyzer.service;
 
+import org.apache.commons.fileupload.InvalidFileNameException;
+import org.cbio.peralyzer.util.IOUtil;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 
@@ -22,8 +24,13 @@ public class NetworkService
 	}
 
 	@Cacheable("networkDataCache")
-	public String getNetworkData(String model) throws IOException
+	public String getNetworkData(String model) throws IOException, InvalidFileNameException
 	{
+		if (!IOUtil.isValidFilename(model))
+		{
+			throw new InvalidFileNameException(model, "Invalid filename.");
+		}
+
 		String filename = this.getNetworkModelsResource().getFile().getAbsolutePath() +
 		                  "/" + model + ".cyjs";
 

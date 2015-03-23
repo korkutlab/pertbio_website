@@ -1,5 +1,7 @@
 package org.cbio.peralyzer.service;
 
+import org.apache.commons.fileupload.InvalidFileNameException;
+import org.cbio.peralyzer.util.IOUtil;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 
@@ -23,8 +25,13 @@ public class HistogramDataService
 	}
 
 	@Cacheable("histogramDataCache")
-	public String getHistogramData(String prediction) throws IOException
+	public String getHistogramData(String prediction) throws IOException, InvalidFileNameException
 	{
+		if (!IOUtil.isValidFilename(prediction))
+		{
+			throw new InvalidFileNameException(prediction, "Invalid filename.");
+		}
+
 		BufferedReader in = new BufferedReader(new FileReader(generateFilename(prediction)));
 		String line;
 		StringBuilder buffer = new StringBuilder();

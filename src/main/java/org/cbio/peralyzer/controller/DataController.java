@@ -73,7 +73,7 @@ public class DataController
 		String response;
 		try {
 			response = matrixDataService.getMatrixData(name);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			return new ResponseEntity<String>(e.getMessage(), headers, HttpStatus.BAD_REQUEST);
 		}
 
@@ -91,7 +91,7 @@ public class DataController
 		String response;
 		try {
 			response = histogramDataService.getHistogramData(name);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			return new ResponseEntity<String>(e.getMessage(), headers, HttpStatus.BAD_REQUEST);
 		}
 
@@ -110,7 +110,7 @@ public class DataController
 
 		try {
 			matrices = matrixDataService.listMatrices(directory);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			return new ResponseEntity<String>(e.getMessage(), headers, HttpStatus.BAD_REQUEST);
 		}
 
