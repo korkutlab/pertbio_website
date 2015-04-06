@@ -20,7 +20,7 @@ function main(args)
 	var PREFIX = "predict";
 	var SUFFIX = ".txt";
 	var DEFAULT_BIN_COUNT = 100;
-	var DEFAULT_DISTORTION = 1.3;
+	var DEFAULT_DISTORTION = 1.5;
 	var DEFAULT_INDEX_FILE = "simul_columns_of_interest.json";
 
 	// map of <column name, column index> pairs (of select columns only)
