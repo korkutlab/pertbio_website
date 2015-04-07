@@ -121,7 +121,7 @@
 							<!--li class="divider"></li-->
 						</ul>
 					</li>
-					<li><a href="#tab-cross-validation" data-toggle="tab" class="link-cross-validation">Cross Validation</a></li>
+					<!--li><a href="#tab-cross-validation" data-toggle="tab" class="link-cross-validation">Cross Validation</a></li-->
 					<li><a href="#tab-source-code" data-toggle="tab">Source Code</a></li>
 					<li><a href="#tab-about" data-toggle="tab">About</a></li>
 				</ul>
