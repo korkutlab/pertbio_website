@@ -308,8 +308,15 @@
 	</script>
 
 	<script type="text/template" id="simulation_summary_template">
-		<span class="average-response">Average response: {{mean}}</span>
-		<span class="standard-deviation">Standard deviation: {{stdDev}}</span>
+		<div>
+			<span class="average-response">Average response: {{mean}}</span>
+			<span class="standard-deviation">Standard deviation: {{stdDev}}</span>
+		</div>
+		<div>
+			<span class="chart-title">
+				Predicted Response: log<sub>2</sub>(perturbed / non-perturbed)
+			</span>
+		</div>
 	</script>
 
 	<script type="text/template" id="cross_validation_visualizer_template">

@@ -99,7 +99,7 @@ var SimulationView = Backbone.View.extend({
 		var barChart = new BarChart({el: histogramEl,
 				drawLine: [line1, line2],
 				yAxisLabel: "# of Models",
-				xAxisLabel: "Predicted Response: log(perturbed / non-perturbed)"},
+				xAxisLabel: "Predicted Response: log2(perturbed / non-perturbed)"},
 			histogramData);
 
 		barChart.init();
