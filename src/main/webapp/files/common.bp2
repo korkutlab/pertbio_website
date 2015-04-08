@@ -1,0 +1,42 @@
+       DOUBLE PRECISION XO(NEXPTS)
+        DOUBLE PRECISION PJU(NNODES,NEXPTS),JAVG(NNODES,NEXPTS)
+     :,XJ(NNODES,NEXPTS)
+       DOUBLE PRECISION 
+     :hmean_ij(NNODES,NEXPTS),stddev_ij(NNODES,NEXPTS)
+       DOUBLE PRECISION X2J2(NNODES,NEXPTS),J2AVG(NNODES,NEXPTS)
+       DOUBLE PRECISION DELTAMAX
+       DOUBLE PRECISION s1,s2,s(5000000),rho_tm1(NNODES,NEXPTS,nwvals)
+       INTEGER timeArray(8),fff
+       DOUBLE PRECISION SUMPJUJV(NNODES,NEXPTS),FF,
+     :SUMPJU(NNODES,NEXPTS),SUMPJUJV2(NNODES,NEXPTS),
+     :HMEAN(NEXPTS),stddev(NEXPTS)
+       DOUBLE PRECISION DELTARHO(NNODES,NEXPTS,nwvals),
+     :sump(NNODES,NEXPTS),
+     :maxdeltarho
+       DOUBLE PRECISION pt(NNODES,NEXPTS,nwvals),threshold
+       double precision pmn(NNODES,nwvals),pmar(NNODES,nwvals),
+     :sumpm(NNODES)
+       DOUBLE PRECISION RHO(NNODES,NEXPTS,nwvals)
+       double precision
+     :pmt(NNODES*NNODES,nwvals),pmto(NNODES*NNODES,nwvals)
+       integer bb(nnodes*nnodes),cc(nnodes*nnodes)
+       integer bm(nnodes*nnodes),cm(nnodes*nnodes),dmax(30000)
+       reaL err(NNODES,NEXPTS),error(NNODES),je(NNODES,NNODES)
+	   real err2(NNODES,NEXPTS),error2(nnodes),errorm3(nnodes)
+       real errorm(nnodes*nnodes)
+       integer myperm(NEXPTS)
+       double precision adj(NNODES,nwvals),totalfield(NNODES,nwvals)
+       double precision 
+     :pjt(NNODES,NEXPTS,nwvals),pjjt(NNODES,NEXPTS,nwvals)
+       double precision pj(NNODES,NEXPTS,nwvals),
+     :pjj(NNODES,NEXPTS,nwvals),
+     :errorm2(nnodes*nnodes)
+       double precision pent(NNODES,nwvals)
+       double precision pmtm(nnodes*nnodes,nwvals)
+       integer inf,myperm2(nnodes)
+       double precision sumirho(NNODES,NEXPTS)
+       double precision pwij(nnodes,nnodes,nwvals),
+     :pwijo(nnodes,nnodes,nwvals)
+     :,pwij_mu(NNODES,NEXPTS,nwvals)
+        real wij(NNODES,NNODES)
+        integer conflag

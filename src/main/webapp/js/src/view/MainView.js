@@ -27,6 +27,8 @@ var MainView = Backbone.View.extend({
 			_.template($("#network_modelling_template").html(), {}));
 		self.$el.find("#tab-prediction-background").html(
 			_.template($("#prediction_bg_template").html(), {}));
+		self.$el.find("#tab-download").html(
+			_.template($("#download_template").html(), {}));
 
 		self.format();
 	},

@@ -19,6 +19,10 @@
 	padding-left: 15px;
 }
 
+#tab-download .main-paragraph {
+	margin-bottom: 10px;
+}
+
 .stressed-text {
 	font-style: italic;
 }

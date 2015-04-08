@@ -79,6 +79,7 @@
 	<%@ include file="templates/home_page.html" %>
 	<%@ include file="templates/network_modelling.html" %>
 	<%@ include file="templates/prediction_background.html" %>
+	<%@ include file="templates/download.html" %>
 
 	<script type="text/template" id="main_view_template">
 		<!-- Navigation Bar -->
@@ -122,7 +123,7 @@
 						</ul>
 					</li>
 					<!--li><a href="#tab-cross-validation" data-toggle="tab" class="link-cross-validation">Cross Validation</a></li-->
-					<li><a href="#tab-source-code" data-toggle="tab">Source Code</a></li>
+					<li><a href="#tab-download" data-toggle="tab">Download</a></li>
 					<li><a href="#tab-about" data-toggle="tab">About</a></li>
 				</ul>
 			</div>
@@ -168,7 +169,7 @@
 				<img src="images/loading.gif" alt="Loading...">
 			</div>
 
-			<div role="tabpanel" class="tab-pane default-pane" id="tab-source-code"></div>
+			<div role="tabpanel" class="tab-pane container" id="tab-download"></div>
 
 			<div role="tabpanel" class="tab-pane default-pane" id="tab-about"></div>
 		</div>
@@ -214,7 +215,7 @@
 			<table>
 				<tr>
 					<td>
-						<div class="select-box-title model-select-title">Select a model to load...</div>
+						<div class="select-box-title model-select-title">Select a model</div>
 						<div>
 							<select class="select-box model-box span2" tabindex="1">
 								{{selectOptions}}

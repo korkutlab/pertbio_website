@@ -1,0 +1,27 @@
+       INTEGER N_VAR,NEXPTS,NWVALS,NNODES,N_OBS,N_DECI
+       DOUBLE PRECISION LAMBDA,BETA
+       DOUBLE PRECISION THRESH,xm,jm
+       DOUBLE PRECISION Wvals(100)
+       double precision XDATA(1000,1000),XDATACG(1000,1000)
+       double precision XDATAe(1000,1000)
+       DOUBLE PRECISION stdv,mean,A,B,alpha
+       integer HH,TARGET_NODE,eof,bdec,deci,odatacg(1000,1000)
+       double precision xri(1000,1000),xdi(1000,1000),x_i(1000,1000)
+       double precision UDATA(1000,1000),UDATAx(1000),UDATACG(1000,1000)
+       integer b_dec,round,iiix
+       double precision Wijmax,jfx
+       double precision alb(1000),albe(1000)
+       character*11 pri1(1000),pri2(1000)
+       integer n_pri
+       character name_ii(1000,1000)*11
+       integer ggg,priv(1000)
+       character name*11,protname(1000)*11
+       character protnamei(1000)*11,name_i(1000)*11
+       double precision xdiabs(1000,1000)
+       double precision XDATAi(1000,1000)
+       integer in(1000),n_vax,indr
+       double precision UDATAi(1000,1000),UDATAe(1000,1000)
+       integer inx(1000)
+       integer indx,expcg,expcgi
+       integer bpi,ntyp(1000),ntyx(1000),inxcg(10000)
+       integer nexpcg,NTYPO(1000)
