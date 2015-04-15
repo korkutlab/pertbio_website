@@ -23,6 +23,10 @@
 	margin-bottom: 10px;
 }
 
+#tab-exec-model .heatmap-controls td {
+	padding-right: 10px;
+}
+
 .stressed-text {
 	font-style: italic;
 }

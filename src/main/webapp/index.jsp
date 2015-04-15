@@ -222,6 +222,9 @@
 							</select>
 						</div>
 					</td>
+					<td valign="top">
+						<a href="files/executable_models.zip" target="_blank">Download all executable models</a>
+					</td>
 				</tr>
 			</table>
 		</div>
