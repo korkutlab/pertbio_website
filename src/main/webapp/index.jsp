@@ -80,6 +80,7 @@
 	<%@ include file="templates/network_modelling.html" %>
 	<%@ include file="templates/prediction_background.html" %>
 	<%@ include file="templates/download.html" %>
+	<%@ include file="templates/about.html" %>
 
 	<script type="text/template" id="main_view_template">
 		<!-- Navigation Bar -->
@@ -124,7 +125,7 @@
 					</li>
 					<!--li><a href="#tab-cross-validation" data-toggle="tab" class="link-cross-validation">Cross Validation</a></li-->
 					<li><a href="#tab-download" data-toggle="tab">Download</a></li>
-					<li><a href="#tab-about" data-toggle="tab">About</a></li>
+					<li><a href="#tab-about" data-toggle="tab">People</a></li>
 				</ul>
 			</div>
 		</div>
@@ -171,7 +172,7 @@
 
 			<div role="tabpanel" class="tab-pane container" id="tab-download"></div>
 
-			<div role="tabpanel" class="tab-pane default-pane" id="tab-about"></div>
+			<div role="tabpanel" class="tab-pane container" id="tab-about"></div>
 		</div>
 	</script>
 
