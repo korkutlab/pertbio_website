@@ -16,6 +16,10 @@
 		<property name="networkModelsResource" value="${networkModels.location}"/>
 	</bean>
 
+	<bean class="org.cbio.peralyzer.service.LogService" id="logService">
+		<property name="logResource" value="${log.location}"/>
+	</bean>
+
 	<bean class="org.cbio.peralyzer.service.HistogramDataService" id="histogramDataService">
 		<property name="histogramDataResource" value="${histogramData.location}"/>
 	</bean>

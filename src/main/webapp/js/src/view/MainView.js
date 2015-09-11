@@ -28,7 +28,7 @@ var MainView = Backbone.View.extend({
 		self.$el.find("#tab-prediction-background").html(
 			_.template($("#prediction_bg_template").html(), {}));
 		self.$el.find("#tab-download").html(
-			_.template($("#download_template").html(), {}));
+			_.template($("#download_form_template").html(), {}));
 		self.$el.find("#tab-about").html(
 			_.template($("#about_template").html(), {}));
 
@@ -71,6 +71,22 @@ var MainView = Backbone.View.extend({
 			setTimeout(function() {
 				self.initCrossValidationTab();
 			}, 200);
+		});
+
+		var downloadForm = self.$el.find("#tab-download .form-download");
+		downloadForm.submit(function(evt) {
+			var name = downloadForm.find("#name").val();
+			var org = downloadForm.find("#organization").val();
+
+			// send info to the server
+			$.getJSON("data/info/" + name +"/" + org, function() {
+				// replace contents with actual download links
+				self.$el.find("#tab-download").html(
+					_.template($("#download_template").html(), {}));
+			});
+
+			// this is to prevent form submit
+			return false;
 		});
 
 		self.$el.find(".navbar-brand").click(function(evt) {

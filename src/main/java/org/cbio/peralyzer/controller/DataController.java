@@ -1,6 +1,7 @@
 package org.cbio.peralyzer.controller;
 
 import org.cbio.peralyzer.service.HistogramDataService;
+import org.cbio.peralyzer.service.LogService;
 import org.cbio.peralyzer.service.MatrixDataService;
 import org.cbio.peralyzer.service.NetworkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class DataController
 	@Autowired
 	HistogramDataService histogramDataService;
 
+	@Autowired
+	LogService logService;
+
 	public NetworkService getNetworkService()
 	{
 		return networkService;
@@ -43,6 +47,24 @@ public class DataController
 	public void setMatrixDataService(MatrixDataService matrixDataService)
 	{
 		this.matrixDataService = matrixDataService;
+	}
+
+	public HistogramDataService getHistogramDataService()
+	{
+		return histogramDataService;
+	}
+	public void setHistogramDataService(HistogramDataService histogramDataService)
+	{
+		this.histogramDataService = histogramDataService;
+	}
+
+	public LogService getLogService()
+	{
+		return logService;
+	}
+	public void setLogService(LogService logService)
+	{
+		this.logService = logService;
 	}
 
 	@RequestMapping(value = "network/{model}", method = {RequestMethod.GET, RequestMethod.POST},
@@ -74,6 +96,26 @@ public class DataController
 		try {
 			response = matrixDataService.getMatrixData(name);
 		} catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), headers, HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<String>(response, headers, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "info/{name}/{organization}",
+			method = {RequestMethod.GET, RequestMethod.POST},
+			headers = "Accept=application/json")
+	public ResponseEntity<String> getInfo(@PathVariable String name,
+			@PathVariable String organization)
+	{
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json; charset=utf-8");
+
+		String response;
+		try {
+			response = logService.logDownload(name, organization);
+		}
+		catch (Exception e) {
 			return new ResponseEntity<String>(e.getMessage(), headers, HttpStatus.BAD_REQUEST);
 		}
 
