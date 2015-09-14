@@ -2,3 +2,4 @@ networkModels.location=file:/data/peralyzer/network_models
 matrixData.location=file:/data/peralyzer/matrix_data
 simulationData.location=file:/data/peralyzer/simulation_data
 histogramData.location=file:/data/peralyzer/histogram_data
+log.location=file:/data/peralyzer/log.txt
