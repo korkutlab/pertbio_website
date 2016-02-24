@@ -413,7 +413,7 @@ c	compute error of the solution
      
       write(56,"(A6,9x,2F12.4)")"error=",errorm(deci),errorm2(deci)
       write(*,*)"error=",errorm(deci),errorm2(deci),errorm3(deci)
-	  write(61,*)round,errorm3(deci)
+c	  write(61,*)round,errorm3(deci)
       go to 133
 
 c      go to 111		!margsel
@@ -871,9 +871,9 @@ c	gaussian term to be included
               prio_const=1
               prio_gamma=1.2
               open(77,file='prio.txt')
-              open(78,file="degrees_combined.tsv")
+c              open(78,file="degrees_combined.tsv")
        do i=1,nnodes
-       read(78,*)protna(i)!,pri_order(i)
+c       read(78,*)protna(i)!,pri_order(i)
 c       print*,protna(i),pri_order(i)
 c       support(i)=1
        pri_order(i)=1
@@ -982,7 +982,7 @@ c     :print*,+prize(ii,k),-penalty(ii,k),ii,target_node
         enddo
         enddo
         CLOSE(77)
-        CLOSE(78)
+c        CLOSE(78)
       end     
 cccccccccccccccccccccccccccccccccccccccccccccc
 cccccccccccccccccccccccccccccccccccccccccccccc      
@@ -1024,9 +1024,9 @@ c      write a temporary command file
         
 c      write the options file
 c       open(2,file="inp_cg.txt")
-       open(3,file="options_"//trim(adjustl(index))//".txt")
+       open(3,file="model_"//trim(adjustl(index))//".txt")
        open(4,file="topology_"//trim(adjustl(index))//".txt")
-       options="options_"//trim(adjustl(index))//".txt"
+       options="model_"//trim(adjustl(index))//".txt"
        topology="topology_"//trim(adjustl(index))//".txt"
 c       read(2,*)opt_resultpath
 c       write(3,*)opt_resultpath

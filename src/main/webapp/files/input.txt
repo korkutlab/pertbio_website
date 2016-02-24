@@ -1,12 +1,12 @@
 NEXPTS=      89
-NNODES=     100
+NNODES=      99
 NWVALS=      11
 Wijmax=   1.00E+00
 THRESH=   1.00E-06
 lambda=    5.00
 beta=      2.00
-NOBS=        88
-NNODESmax=  100
+NOBS=        87
+NNODESmax=   99
 NPRI=       154
 n_dec=       80
 NEXPmax=     89
