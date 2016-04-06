@@ -102,18 +102,19 @@ public class DataController
 		return new ResponseEntity<String>(response, headers, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "info/{name}/{organization}",
+	@RequestMapping(value = "info/{name}/{organization}/{purpose}",
 			method = {RequestMethod.GET, RequestMethod.POST},
 			headers = "Accept=application/json")
 	public ResponseEntity<String> getInfo(@PathVariable String name,
-			@PathVariable String organization)
+			@PathVariable String organization,
+			@PathVariable String purpose)
 	{
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "application/json; charset=utf-8");
 
 		String response;
 		try {
-			response = logService.logDownload(name, organization);
+			response = logService.logDownload(name, organization, purpose);
 		}
 		catch (Exception e) {
 			return new ResponseEntity<String>(e.getMessage(), headers, HttpStatus.BAD_REQUEST);

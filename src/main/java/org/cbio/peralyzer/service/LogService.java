@@ -26,7 +26,7 @@ public class LogService
 		this.logResource = logResource;
 	}
 
-	public String logDownload(String name, String organization) throws IOException
+	public String logDownload(String name, String organization, String purpose) throws IOException
 	{
 		String filename = this.getLogResource().getFile().getAbsolutePath();
 
@@ -39,6 +39,8 @@ public class LogService
 		builder.append(" (");
 		builder.append(organization);
 		builder.append(")");
+		builder.append(" / ");
+		builder.append(purpose);
 		builder.append("\n");
 
 		if (!Files.exists(Paths.get(filename)))

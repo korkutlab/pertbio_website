@@ -77,9 +77,10 @@ var MainView = Backbone.View.extend({
 		downloadForm.submit(function(evt) {
 			var name = downloadForm.find("#name").val();
 			var org = downloadForm.find("#organization").val();
+			var purpose = downloadForm.find("#purpose").val();
 
 			// send info to the server
-			$.getJSON("data/info/" + name +"/" + org, function() {
+			$.getJSON("data/info/" + name +"/" + org + "/" + purpose.replace(/\s/g, " "), function() {
 				// replace contents with actual download links
 				self.$el.find("#tab-download").html(
 					_.template($("#download_template").html(), {}));
